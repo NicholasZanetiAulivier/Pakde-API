@@ -1,4 +1,5 @@
 const dotenv = require('dotenv');
+const fs = require('fs');
 
 process.env.NODE_ENV = (process.env.NODE_ENV || 'development').toLowerCase();
 
@@ -11,10 +12,16 @@ module.exports = {
     env: process.env.NODE_ENV,
     api: {
         prefix: '/api',
+        port: process.env.APP_PORT || 5000,
+        name: process.env.APP_NAME || "API",
     },
-    port: process.env.PORT || 5000,
     database: {
-        connection: process.env.DB_CONNECTION,
-        name: process.env.DB_NAME,
+        user: process.env.USER,
+        password: process.env.PASSWORD,
+        host: process.env.HOST,
+        port: process.env.PORT,
+        name: process.env.DATABASE,
+        certificate: fs.readFileSync('./ca.pem').toString(),
+        connectionString: process.env.CONNECTION_STRING,
     },
 };

@@ -1,5 +1,6 @@
 const { env, port } = require('./core/config');
 const server = require("./core/server");
+const db = require('./database/db');
 
 const app = server.listen(port, (err) => {
     if (err) {
@@ -10,9 +11,12 @@ const app = server.listen(port, (err) => {
     }
 });
 
+
+
 process.on('uncaughtException', (err) => {
     // logger.fatal(err, 'Uncaught exception.');
 
+    // db.end();
     app.close(() => process.exit(1));
 
     setTimeout(() => process.abort(), 1000).unref();

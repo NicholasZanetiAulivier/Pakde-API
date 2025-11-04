@@ -7,8 +7,9 @@ const app = express();
 
 app.use(logger);
 
+//Tests
 app.get('/', (req, res) => {
-    res.send(`${dwidwi}`);
+    res.send(`${111}`);
 })
 
 //Error Response
