@@ -15,9 +15,6 @@ const CONNECTION_CONFIGURATION = {
 
 db = new pg.Pool(CONNECTION_CONFIGURATION);
 
-db.connect().then((res) => res.query("SELECT NOW()").then((res2) => console.log(res2.rows[0]))).catch((err) => console.log(err)).finally();
-db.connect().then((res) => res.query("SELECT NOW()").then((res2) => console.log(res2.rows[0]))).catch((err) => console.log(err)).finally();
-
 db.connect(function (err) {
     if (err) throw err;
     db.query("SELECT VERSION()", [], function (err, result) {
