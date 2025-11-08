@@ -2,6 +2,8 @@ const { env, port } = require('./core/config');
 const server = require("./core/server");
 const db = require('./database/db');
 
+const express = require('express'); //for vercel
+
 const app = server.listen(port, (err) => {
     if (err) {
         // logger.fatal(err, 'Failed to stat the server.');
