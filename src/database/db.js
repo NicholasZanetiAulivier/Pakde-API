@@ -21,9 +21,9 @@ db.connect(function (err) {
         if (err) throw err;
 
         console.log(result.rows[0]);
-        db.end(function (err) {
-            if (err) throw err;
-        });
+        // db.end(function (err) {
+        //     if (err) throw err;
+        // });
     });
 });
 

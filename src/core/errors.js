@@ -9,6 +9,21 @@ const errors = {
         status: 404,
         code: 'NOT_FOUND_ERROR',
     },
+    NO_ARGUMENT: {
+        description: 'Required arguments not supplied',
+        status: 500,
+        code: 'NO_ARGUMENT_ERROR',
+    },
+    INVALID_CREDENTIALS: {
+        description: 'Invalid credentials',
+        status: 403,
+        code: 'INVALID_CREDENTIALS_ERROR',
+    },
+    DB: {
+        description: 'Database error occurred',
+        status: 500,
+        code: 'DB_ERROR',
+    },
 };
 
 

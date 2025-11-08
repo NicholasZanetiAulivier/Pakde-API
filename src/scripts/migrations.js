@@ -1,5 +1,6 @@
 const db = require('../database/db');
 const repopulate = require('./instructions');
+const bcrypt = require('bcrypt');
 
 const tables = [
     'foods',
@@ -36,6 +37,10 @@ db.connect().then(async (client) => {
     }
 
     await client.query("SELECT schemaname, tablename FROM pg_catalog.pg_tables WHERE schemaname NOT IN ('pg_catalog', 'information_schema');").then((res) => console.log(res.rows));
+
+    //temp
+    await client.query(`INSERT INTO admins(username , password) VALUES ('admin', '${bcrypt.hashSync("1234567890", bcrypt.genSaltSync())}');`);
+
 
 }).catch(async (e) => {
     console.log("Something went wrong");
