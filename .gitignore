@@ -5,3 +5,4 @@ desktop.ini
 .env
 *.log
 ca.pem
+logs
