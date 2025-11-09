@@ -19,6 +19,11 @@ const errors = {
         status: 403,
         code: 'INVALID_CREDENTIALS_ERROR',
     },
+    INVALID_TOKEN: {
+        description: "Invalid token",
+        status: 403,
+        code: 'INVALID_TOKEN_ERROR'
+    },
     DB: {
         description: 'Database error occurred',
         status: 500,

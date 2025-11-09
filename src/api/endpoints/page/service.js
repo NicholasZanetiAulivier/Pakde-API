@@ -1,41 +1,9 @@
 const { errorResponder, errors } = require('../../../core/errors');
 const repository = require('./repository');
 
-const pageMap = {
-    home: {
-        home_banner_title_white: "bannerTitleWhite",
-        home_banner_title_orange: "bannerTitleOrange",
-        home_banner_subtitle: "bannerSubtitle",
-        home_menu_title: "menuTitle",
-        home_menu_subtitle: "menuSubtitle",
-        home_story_title: "storyTitle",
-        home_story_description: "storyDescription",
-        home_blog_title: "blogTitle",
-        home_blog_subtitle: "blogSubtitle",
-    },
-    menu: {
-        menu_banner_title_white: "bannerTitleWhite",
-        menu_banner_title_orange: "bannerTitleOrange",
-        menu_banner_subtitle: "bannerSubtitle",
-        menu_menu_title: "menuTitle",
-        menu_menu_subtitle: "menuSubtitle",
-    },
-    contact: {
-        contact_banner_title_white: "bannerTitleWhite",
-        contact_banner_title_orange: "bannerTitleOrange",
-        contact_banner_subtitle: "bannerSubtitle",
-    },
-    about: {
-        about_banner_title_white: "bannerTitleWhite",
-        about_banner_title_orange: "bannerTitleOrange",
-        about_banner_subtitle: "bannerSubtitle",
-        about_story_title: "storyTitle",
-        about_story_description: "storyDescription",
-        about_team_title: "teamTitle",
-        about_team_subtitle: "teamSubtitle",
+const pageMap = repository.pageMap;
 
-    },
-};
+const pageAttributes = repository.pageAttributes;
 
 async function getPage(pageName) {
     const result = await repository.getPageData(pageName);
@@ -55,7 +23,15 @@ async function getPage(pageName) {
     return data;
 }
 
+async function updatePage(page, data) {
+    for (const attrib of pageAttributes[page]) {
+        if (!(attrib in data)) continue;
+        await repository.updatePageAttribute(page, attrib, data[attrib]);
+    }
+}
+
 module.exports = {
     pages: repository.pages,
     getPage,
+    updatePage,
 };
