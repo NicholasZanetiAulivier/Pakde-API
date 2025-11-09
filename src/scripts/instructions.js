@@ -14,7 +14,7 @@ instructions.tables.admins =
 instructions.tables.misc =
     `CREATE TABLE misc(
         attribute VARCHAR PRIMARY KEY,
-        value VARCHAR UNIQUE NOT NULL
+        value VARCHAR NOT NULL
     );`
     ;
 
@@ -86,5 +86,38 @@ instructions.tables.foods =
         category VARCHAR REFERENCES food_categories (name) ON DELETE RESTRICT,
         imageid smallint REFERENCES images (id) ON DELETE RESTRICT
     );`;
+
+//Table seeders
+instructions.seeders = {};
+
+instructions.seeders.misc = [
+    "INSERT INTO misc(attribute , value) VALUES ('home_banner_title_white','Nasi Goreng');",
+    "INSERT INTO misc(attribute , value) VALUES ('home_banner_title_orange','Pakde Har');",
+    "INSERT INTO misc(attribute , value) VALUES ('home_banner_subtitle','Bukan sekadar pengganjal lapar. Nikmati porsi brutal\ndengan bumbu khas yang otentik. Harga pas di\nkantong, rasa dijamin nendang!');",
+    "INSERT INTO misc(attribute , value) VALUES ('home_menu_title','Menu Unggulan Kami');",
+    "INSERT INTO misc(attribute , value) VALUES ('home_menu_subtitle','Cobain menu favorit yang paling laris dan bikin ketagihan,\ndijamin bakal bikin kamu pengen nambah terus!');",
+    "INSERT INTO misc(attribute , value) VALUES ('home_story_title','Cerita Kami');",
+    "INSERT INTO misc(attribute , value) VALUES ('home_story_description','Didirikan pada tahun 2017 oleh Pakde Har, kedai kami menghadirkan cita rasa Indonesia yang autentik melalui hidangan andalan kami - Nasi Goreng. Berawal dari warung kecil di rumah, kini telah berkembang menjadi tempat kuliner favorit banyak orang');",
+    "INSERT INTO misc(attribute , value) VALUES ('home_blog_title','Berita Harian Kami');",
+    "INSERT INTO misc(attribute , value) VALUES ('home_blog_subtitle','Ikuti berbagai berita dan perkembangan terbaru dari Pakde Har');",
+
+    "INSERT INTO misc(attribute , value) VALUES ('menu_banner_title_white','Menu');",
+    "INSERT INTO misc(attribute , value) VALUES ('menu_banner_title_orange','Kami');",
+    "INSERT INTO misc(attribute , value) VALUES ('menu_banner_subtitle','Temukan berbagai nasi goreng lezat yang disajikan\ndengan cinta dan rasa');",
+    "INSERT INTO misc(attribute , value) VALUES ('menu_menu_title','Menu Unggulan Kami');",
+    "INSERT INTO misc(attribute , value) VALUES ('menu_menu_subtitle','');",
+
+    "INSERT INTO misc(attribute , value) VALUES ('about_banner_title_white','Cerita di Balik\nNasi Goreng');",
+    "INSERT INTO misc(attribute , value) VALUES ('about_banner_title_orange','Pakde Har');",
+    "INSERT INTO misc(attribute , value) VALUES ('about_banner_subtitle','Dari wajan sederhana di pinggir jalan Untar, Pakde\nHar menghadirkan cita rasa nasi goreng yang penuh\nkenangan dan kehangatan.');",
+    "INSERT INTO misc(attribute , value) VALUES ('about_story_title','Dari Awal yang Sederhana');",
+    "INSERT INTO misc(attribute , value) VALUES ('about_story_description','Perjalanan Pakde Har dimulai pada tahun 2017, ketika Pakde Har mulai membuat nasi goreng khas buatannya dari dapur rumah sederhana. Berkat cita rasa bumbu khas dan harga yang ramah di kantong mahasiswa, aroma nasi goreng Pakde Har cepat menarik perhatian banyak pelanggan.\nSetahun kemudian, Pakde mulai berjualan di samping Universitas Tarumanagara tempat di mana kehangatan, tawa, dan cerita para mahasiswa selalu menemani setiap wajan yang bergoyang.\nKini, Warung Nasi Goreng Pakde Har terus berkembang. Dengan tempat yang telah direnovasi, kami tetap berkomitmen menyajikan rasa autentik dan suasana akrab yang telah menjadi ciri khas kami sejak awal.');",
+    "INSERT INTO misc(attribute , value) VALUES ('about_team_title','Kenali Tim Kami');",
+    "INSERT INTO misc(attribute , value) VALUES ('about_team_subtitle','Orang dibalik Nasi Goreng Pakde Har');",
+
+    "INSERT INTO misc(attribute , value) VALUES ('contact_banner_title_white','Hubungi Kami');",
+    "INSERT INTO misc(attribute , value) VALUES ('contact_banner_title_orange','');",
+    "INSERT INTO misc(attribute , value) VALUES ('contact_banner_subtitle','Punya pertanyaan atau saran? Kirim pesan ke kami dan\nkami siap melayani dengan sepenuh hati');",
+];
 
 module.exports = instructions;

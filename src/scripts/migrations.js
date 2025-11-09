@@ -38,6 +38,16 @@ db.connect().then(async (client) => {
 
     await client.query("SELECT schemaname, tablename FROM pg_catalog.pg_tables WHERE schemaname NOT IN ('pg_catalog', 'information_schema');").then((res) => console.log(res.rows));
 
+    //Seeding
+    for (const tableName in repopulate.seeders) {
+        const instructions = repopulate.seeders[tableName];
+        for (const instruction of instructions) {
+            await client.query(instruction)
+                .catch((e) => console.log(`Error on instruction: ${instruction}\n${e}`));
+        }
+        console.log(`Table ${tableName} successfully seeded!`);
+    }
+
     //temp
     await client.query(`INSERT INTO admins(username , password) VALUES ('admin', '${bcrypt.hashSync("1234567890", bcrypt.genSaltSync())}');`);
 

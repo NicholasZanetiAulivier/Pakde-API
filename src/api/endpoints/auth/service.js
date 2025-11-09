@@ -1,4 +1,4 @@
-const repository = require('./auth-repository');
+const repository = require('./repository');
 
 async function getUser(username) {
     const results = await repository.getUser(username);
