@@ -14,6 +14,11 @@ const errors = {
         status: 500,
         code: 'NO_ARGUMENT_ERROR',
     },
+    INVALID_ARGUMENT: {
+        description: 'Required arguments not valid',
+        status: 500,
+        code: 'INVALID_ARGUMENT',
+    },
     INVALID_CREDENTIALS: {
         description: 'Invalid credentials',
         status: 403,

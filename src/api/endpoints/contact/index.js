@@ -6,5 +6,6 @@ const route = express.Router();
 //Paths
 route.get('/', controller.getContacts);
 route.post('/phone', controller.addPhone);
+route.put('/phone/:id', controller.changePhone);
 
 module.exports = route;
