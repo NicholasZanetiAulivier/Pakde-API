@@ -64,9 +64,33 @@ async function changePhone(phone, id) {
 async function deletePhone(id) {
     const current = await repository.getCurrentPhoneString();
     const currentList = current.split("&&");
-    let temp = currentList.splice(id, 1);
+    currentList.splice(id, 1);
     const newString = currentList.join("&&");
     await repository.updatePhoneNumber(newString);
+}
+
+async function addEmail(number) {
+    const current = await repository.getCurrentEmailString();
+    const currentList = current.split("&&");
+    currentList.push(number);
+    const newString = currentList.join("&&");
+    await repository.updateEmail(newString);
+}
+
+async function changeEmail(email, id) {
+    const current = await repository.getCurrentEmailString();
+    const currentList = current.split("&&");
+    currentList[id] = email;
+    const newString = currentList.join("&&");
+    await repository.updateEmail(newString);
+}
+
+async function deleteEmail(id) {
+    const current = await repository.getCurrentEmailString();
+    const currentList = current.split("&&");
+    currentList.splice(id, 1);
+    const newString = currentList.join("&&");
+    await repository.updateEmail(newString);
 }
 
 
@@ -74,5 +98,8 @@ module.exports = {
     getContactsData,
     addPhone,
     changePhone,
-    deletePhone
+    deletePhone,
+    addEmail,
+    changeEmail,
+    deleteEmail,
 };
