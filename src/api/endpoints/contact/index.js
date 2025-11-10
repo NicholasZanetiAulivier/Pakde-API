@@ -13,4 +13,6 @@ route.delete('/phone/:id', controller.deletePhone);
 route.post('/email', controller.addEmail);
 route.put('/email/:id', controller.changeEmail);
 route.delete('/email/:id', controller.deleteEmail);
+
+route.put('/schedule', controller.changeSchedule);
 module.exports = route;

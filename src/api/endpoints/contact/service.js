@@ -1,6 +1,8 @@
 const { errorResponder, errors } = require('../../../core/errors');
 const repository = require('./repository');
 
+const TIME_CHECKING_REGEX = /^(2[1-4]|(1|0)[0-9]):[0-5][0-9]-(2[1-4]|(1|0)[0-9]):[0-5][0-9]$/
+
 async function getContactsData() {
     const result = await repository.getContactsData();
     const rows = result.rows;
@@ -93,6 +95,31 @@ async function deleteEmail(id) {
     await repository.updateEmail(newString);
 }
 
+async function changeSchedule(newSchedule) {
+    const current = await repository.getCurrentScheduleString();
+    const processing = current.split("&&");
+    let schedulesObject = {};
+    for (const i of processing) {
+        let splitString = i.split("\\");
+        schedulesObject[splitString[0]] = splitString[1];
+    }
+
+    for (const key in schedulesObject) {
+        if (newSchedule[key]) if ((TIME_CHECKING_REGEX.test(newSchedule[key]) && newSchedule[key].length <= 11) || newSchedule[key].toLowerCase().trim() == "closed") {
+            schedulesObject[key] = newSchedule[key].toUpperCase();
+        }
+    }
+    let finalString = "";
+    for (const key in schedulesObject) {
+        finalString += `&&${key}\\${schedulesObject[key]}`;
+    }
+
+    finalString = finalString.slice(2);
+
+    await repository.updateSchedule(finalString);
+    return;
+}
+
 
 module.exports = {
     getContactsData,
@@ -102,4 +129,5 @@ module.exports = {
     addEmail,
     changeEmail,
     deleteEmail,
+    changeSchedule,
 };

@@ -168,6 +168,29 @@ async function deleteEmail(req, res, next) {
     }
 }
 
+async function changeSchedule(req, res, next) {
+    try {
+        const token = req.get('Authorization') || null;
+        if (token == null) throw errorResponder(errors.INVALID_TOKEN, "Token given is invalid or has expired!");
+        try {
+            jwt.verify(token, process.env.SECRET_KEY);
+        } catch (err) {
+            console.log(err);
+            throw errorResponder(errors.INVALID_TOKEN, "Token is invalid!");
+        }
+
+        const schedule = req.body || null;
+
+        if (schedule == null) throw errorResponder(errors.NO_ARGUMENT, "schedule is not supplied");
+
+        await service.changeSchedule(schedule);
+        return res.status(200).json({ message: "Successfully changed!" });
+
+    } catch (e) {
+        next(e);
+    }
+}
+
 module.exports = {
     getContacts,
     addPhone,
@@ -175,5 +198,6 @@ module.exports = {
     deletePhone,
     addEmail,
     changeEmail,
-    deleteEmail
+    deleteEmail,
+    changeSchedule,
 };

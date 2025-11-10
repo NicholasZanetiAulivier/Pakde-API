@@ -1,5 +1,6 @@
 const { errorResponder, errors } = require('../../../core/errors');
 const db = require('../../../database/db');
+const { changeSchedule } = require('./controller');
 
 async function getContactsData() {
     let clientref, res;
@@ -66,7 +67,7 @@ async function getCurrentEmailString() {
             res = result;
         }).catch((err) => {
             console.log(err);
-            throw errorResponder(errors.DB, "Phone numbers hasn't been initialized");
+            throw errorResponder(errors.DB, "Email hasn't been initialized");
         }).finally(() =>
             clientref.release()
         );
@@ -86,7 +87,43 @@ async function updateEmail(newStr) {
             res = result;
         }).catch((e) => {
             console.log(e);
-            throw errorResponder(errors.DB, "Error updating phone numbers from database");
+            throw errorResponder(errors.DB, "Error updating emails from database");
+        }).finally(() => {
+            clientref.release();
+        });
+    })
+}
+
+async function getCurrentScheduleString() {
+    let clientref, res;
+    await db.connect().then(async (client) => {
+        clientref = client;
+        await client.query(
+            `SELECT * FROM misc WHERE attribute = 'contacts_schedules'`
+        ).then((result) => {
+            res = result;
+        }).catch((err) => {
+            console.log(err);
+            throw errorResponder(errors.DB, "Schedules haven't been initialized");
+        }).finally(() =>
+            clientref.release()
+        );
+    });
+    return res.rows[0].value;
+}
+
+async function updateSchedule(sched) {
+    let clientref, res
+    await db.connect().then(async (client) => {
+        clientref = client;
+        await client.query(
+            `UPDATE misc SET value = $1 WHERE attribute = 'contacts_schedules'`,
+            [sched]
+        ).then((result) => {
+            res = result;
+        }).catch((e) => {
+            console.log(e);
+            throw errorResponder(errors.DB, "Error updating schedules from database");
         }).finally(() => {
             clientref.release();
         });
@@ -99,4 +136,7 @@ module.exports = {
     updatePhoneNumber,
     getCurrentEmailString,
     updateEmail,
+    changeSchedule,
+    getCurrentScheduleString,
+    updateSchedule,
 };
