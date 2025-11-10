@@ -1,5 +1,6 @@
 const pg = require('pg');
 const config = require('../core/config');
+const logger = require('../core/logger');
 
 const CONNECTION_CONFIGURATION = {
     user: config.database.user,
@@ -7,6 +8,7 @@ const CONNECTION_CONFIGURATION = {
     host: config.database.host,
     port: config.database.port,
     database: config.database.name,
+    // connectionString: config.database.connectionString,
     ssl: {
         rejectUnauthorized: true,
         ca: config.database.certificate,
@@ -16,10 +18,15 @@ const CONNECTION_CONFIGURATION = {
 db = new pg.Pool(CONNECTION_CONFIGURATION);
 
 db.connect(function (err) {
-    if (err) throw err;
+    if (err) {
+        console.log(err);
+        throw err;
+    }
     db.query("SELECT VERSION()", [], function (err, result) {
-        if (err) throw err;
-
+        if (err) {
+            throw err;
+        }
+        logger.info("Database is connected");
         console.log(result.rows[0]);
         // db.end(function (err) {
         //     if (err) throw err;

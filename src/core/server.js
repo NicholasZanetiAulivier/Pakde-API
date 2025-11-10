@@ -25,16 +25,16 @@ app.use(function (req, res, next) {
     const ip = req.ip;
     const method = req.method;
     const url = req.originalUrl;
-    const params = req.params;
-    const query = req.query;
-    const json = req.body;
+    // const params = req.params;
+    // const query = req.query;
+    // const json = req.body;
 
     const log = `${method} ${url} ${ip}`;
     logger.info(log);
 
-    logger.debug(`Params: ${params ? JSON.stringify(params) : "None"}`);
-    logger.debug(`Query: ${query ? JSON.stringify(query) : "None"}`);
-    logger.debug(`Body: ${json ? JSON.stringify(json) : "None"}`);
+    // logger.debug(`Params: ${params ? JSON.stringify(params) : "None"}`);
+    // logger.debug(`Query: ${query ? JSON.stringify(query) : "None"}`);
+    // logger.debug(`Body: ${json ? JSON.stringify(json) : "None"}`);
     return next();
 });
 
@@ -63,10 +63,6 @@ app.use((err, req, res, next) => {
         description: err.description || 'Unknown error',
         message: err.message || 'An error has occurred',
     });
-});
-
-app.use((req, res, next) => {
-    logger.info("Served");
 });
 
 module.exports = app;

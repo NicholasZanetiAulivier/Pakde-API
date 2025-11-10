@@ -30,7 +30,7 @@ async function signInAdmin(req, res, next) {
                 process.env.SECRET_KEY,
                 { expiresIn: "1h" },
             );
-            res.status(200).json({ token });
+            return res.status(200).json({ token });
         } else {
             throw errorResponder(errors.INVALID_CREDENTIALS, "User does not exist");
         }
