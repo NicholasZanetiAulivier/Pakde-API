@@ -45,6 +45,15 @@ async function getContactsData() {
     return data;
 }
 
+async function addPhone(number) {
+    const current = await repository.getCurrentPhoneString();
+    const currentList = current.split("&&");
+    currentList.push(number);
+    const newString = currentList.join("&&");
+    await repository.updatePhoneNumber(newString);
+}
+
 module.exports = {
     getContactsData,
+    addPhone
 };
