@@ -56,14 +56,23 @@ async function addPhone(number) {
 async function changePhone(phone, id) {
     const current = await repository.getCurrentPhoneString();
     const currentList = current.split("&&");
-    console.log(id);
     currentList[id] = phone;
     const newString = currentList.join("&&");
     await repository.updatePhoneNumber(newString);
 }
 
+async function deletePhone(id) {
+    const current = await repository.getCurrentPhoneString();
+    const currentList = current.split("&&");
+    let temp = currentList.splice(id, 1);
+    const newString = currentList.join("&&");
+    await repository.updatePhoneNumber(newString);
+}
+
+
 module.exports = {
     getContactsData,
     addPhone,
     changePhone,
+    deletePhone
 };
