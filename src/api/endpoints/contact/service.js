@@ -58,6 +58,7 @@ async function addPhone(number) {
 async function changePhone(phone, id) {
     const current = await repository.getCurrentPhoneString();
     const currentList = current.split("&&");
+    if (id >= currentList.length) throw errorResponder(errors.INVALID_ARGUMENT, "Index must be in the range of list");
     currentList[id] = phone;
     const newString = currentList.join("&&");
     await repository.updatePhoneNumber(newString);
@@ -66,6 +67,7 @@ async function changePhone(phone, id) {
 async function deletePhone(id) {
     const current = await repository.getCurrentPhoneString();
     const currentList = current.split("&&");
+    if (id >= currentList.length) throw errorResponder(errors.INVALID_ARGUMENT, "Index must be in the range of list");
     currentList.splice(id, 1);
     const newString = currentList.join("&&");
     await repository.updatePhoneNumber(newString);
@@ -82,6 +84,7 @@ async function addEmail(number) {
 async function changeEmail(email, id) {
     const current = await repository.getCurrentEmailString();
     const currentList = current.split("&&");
+    if (id >= currentList.length) throw errorResponder(errors.INVALID_ARGUMENT, "Index must be in the range of list");
     currentList[id] = email;
     const newString = currentList.join("&&");
     await repository.updateEmail(newString);
@@ -90,6 +93,7 @@ async function changeEmail(email, id) {
 async function deleteEmail(id) {
     const current = await repository.getCurrentEmailString();
     const currentList = current.split("&&");
+    if (id >= currentList.length) throw errorResponder(errors.INVALID_ARGUMENT, "Index must be in the range of list");
     currentList.splice(id, 1);
     const newString = currentList.join("&&");
     await repository.updateEmail(newString);
@@ -120,6 +124,56 @@ async function changeSchedule(newSchedule) {
     return;
 }
 
+async function addAddress(name, address) {
+    const current = await repository.getCurrentAddressString();
+    const currentList = current.split("&&");
+    let addressesArray = currentList.map((str, i) => {
+        let splitString = str.split("\\");
+        return { name: splitString[0], address: splitString[1] };
+    });
+    addressesArray.push({ name, address });
+    let finalString = "";
+    for (const i of addressesArray) {
+        finalString += `&&${i.name}\\${i.address}`;
+    }
+    finalString = finalString.slice(2);
+    await repository.updateAddress(finalString);
+}
+
+async function changeAddress(name, address, id) {
+    const current = await repository.getCurrentAddressString();
+    const currentList = current.split("&&");
+    if (id >= currentList.length) throw errorResponder(errors.INVALID_ARGUMENT, "Index must be in the range of list");
+    let addressesArray = currentList.map((str, i) => {
+        let splitString = str.split("\\");
+        return { name: splitString[0], address: splitString[1] };
+    });
+    addressesArray[id] = { name, address };
+    let finalString = "";
+    for (const i of addressesArray) {
+        finalString += `&&${i.name}\\${i.address}`;
+    }
+    finalString = finalString.slice(2);
+    await repository.updateAddress(finalString);
+}
+
+async function deleteAddress(id) {
+    const current = await repository.getCurrentAddressString();
+    const currentList = current.split("&&");
+    if (id >= currentList.length) throw errorResponder(errors.INVALID_ARGUMENT, "Index must be in the range of list");
+    let addressesArray = currentList.map((str, i) => {
+        let splitString = str.split("\\");
+        return { name: splitString[0], address: splitString[1] };
+    });
+    addressesArray.splice(id, 1);
+    let finalString = "";
+    for (const i of addressesArray) {
+        finalString += `&&${i.name}\\${i.address}`;
+    }
+    finalString = finalString.slice(2);
+    await repository.updateAddress(finalString);
+}
+
 
 module.exports = {
     getContactsData,
@@ -130,4 +184,7 @@ module.exports = {
     changeEmail,
     deleteEmail,
     changeSchedule,
+    addAddress,
+    changeAddress,
+    deleteAddress,
 };

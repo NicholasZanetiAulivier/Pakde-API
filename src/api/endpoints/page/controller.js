@@ -1,6 +1,7 @@
 const service = require('./service');
 const { errorResponder, errors } = require('../../../core/errors');
 const jwt = require('jsonwebtoken');
+const { tokenValidate } = require('../../utils/utils');
 
 const pages = service.pages;
 
@@ -29,14 +30,7 @@ async function getPages(req, res, next) {
 
 async function updatePage(req, res, next) {
     try {
-        const token = req.get('Authorization') || null; //Auth token sent through header;
-        console.log(token);
-        if (token == null) throw errorResponder(errors.INVALID_TOKEN, "Token given is invalid or has expired!");
-        try {
-            jwt.verify(token, process.env.SECRET_KEY);
-        } catch (err) {
-            throw errorResponder(errors.INVALID_TOKEN, "Token is invalid!");
-        }
+        tokenValidate(req);
 
         const data = req.body.data || null;
         const page = req.params.page.toLowerCase() || null;
