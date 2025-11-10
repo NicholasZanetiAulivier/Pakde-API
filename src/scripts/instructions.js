@@ -120,8 +120,9 @@ instructions.seeders.misc = [
     "INSERT INTO misc(attribute , value) VALUES ('contact_banner_subtitle','Punya pertanyaan atau saran? Kirim pesan ke kami dan\nkami siap melayani dengan sepenuh hati');",
 
     "INSERT INTO misc(attribute , value) VALUES ('contacts_addresses','Nasi Goreng Pakde Har\\Sebelah Alfa-X S.Parman\nJl. Taman S. Parman, RT.7/RW.8, Grogol, Kec. Grogol Petamburan, Kota Jakarta Barat, DKI Jakarta 11440&&Nasi Goreng Pakde Har\\Sebelah Alfa-X S.Parman\nJl. Taman S. Parman, RT.7/RW.8, Grogol, Kec. Grogol Petamburan, Kota Jakarta Barat, DKI Jakarta 11440');",
-    "INSERT INTO misc(attribute , value) VALUES ('contacts_schedule','Senin\\07:00-22:00&&Selasa\\07:00-22:00&&Rabu\\07:00-22:00&&Kamis\\07:00-22:00&&Jumat\\07:00-22:00&&Sabtu\\Tutup&&Minggu\\Tutup&&');",
+    "INSERT INTO misc(attribute , value) VALUES ('contacts_schedules','Senin\\07:00-22:00&&Selasa\\07:00-22:00&&Rabu\\07:00-22:00&&Kamis\\07:00-22:00&&Jumat\\07:00-22:00&&Sabtu\\Tutup&&Minggu\\Tutup');",
     "INSERT INTO misc(attribute , value) VALUES ('contacts_phone_numbers','08123456789');",
+    "INSERT INTO misc(attribute , value) VALUES ('contacts_emails','pakdehar@gmail.com');",
 
 ];
 
