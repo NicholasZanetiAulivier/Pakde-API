@@ -122,24 +122,37 @@ instructions.seeders.misc = [
     "INSERT INTO misc(attribute , value) VALUES ('contacts_emails','pakdehar@gmail.com');",
 ];
 
-instructions.seeders.blogs = [
-    "INSERT INTO blogs (title , story) VALUES ('STORY 1' , 'Description 1')",
-    "INSERT INTO blogs (title , story) VALUES ('STORY 2' , 'Description 2')",
-    "INSERT INTO blogs (title , story) VALUES ('STORY 3' , 'Description 3')",
-    "INSERT INTO blogs (title , story) VALUES ('STORY 4' , 'Description 4')",
-    "INSERT INTO blogs (title , story) VALUES ('STORY 5' , 'Description 5')",
-    "INSERT INTO blogs (title , story) VALUES ('STORY 6' , 'Description 6')",
-    "INSERT INTO blogs (title , story) VALUES ('STORY 7' , 'Description 7')",
-    "INSERT INTO blogs (title , story) VALUES ('STORY 8' , 'Description 8')",
-    "INSERT INTO blogs (title , story) VALUES ('STORY 9' , 'Description 9')",
-    "INSERT INTO blogs (title , story) VALUES ('STORY 10' , 'Description 10')",
-]
 
 instructions.seeders.employees = [
     "INSERT INTO employees (name , role, details) VALUES ('Pakde Har' , 'Owner' , 'Some description')",
     "INSERT INTO employees (name , role, details) VALUES ('Employee No 2' , 'employee' , 'Some description')",
     "INSERT INTO employees (name , role, details) VALUES ('Employee No 3' , 'employee' , 'Some description')",
-]
+];
+
+instructions.seeders.blog_categories = [
+    "INSERT INTO blog_categories (name , description) VALUES ('good news' , 'good news description')",
+    "INSERT INTO blog_categories (name , description) VALUES ('bad news' , 'bad news description')",
+    "INSERT INTO blog_categories (name , description) VALUES ('woof news' , 'woof news description')",
+];
+
+instructions.seeders.food_categories = [
+    "INSERT INTO food_categories (name , description) VALUES ('food food' , 'food food description')",
+    "INSERT INTO food_categories (name , description) VALUES ('bad food' , 'bad food description')",
+    "INSERT INTO food_categories (name , description) VALUES ('woof food' , 'woof food description')",
+];
+
+instructions.seeders.blogs = [
+    "INSERT INTO blogs (title , story, category) VALUES ('STORY 1' , 'Description 1' , 'good news')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 2' , 'Description 2')",
+    "INSERT INTO blogs (title , story , category) VALUES ('STORY 3' , 'Description 3' , 'bad news')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 4' , 'Description 4')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 5' , 'Description 5')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 6' , 'Description 6')",
+    "INSERT INTO blogs (title , story , category) VALUES ('STORY 7' , 'Description 7' , 'woof news')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 8' , 'Description 8')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 9' , 'Description 9')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 10' , 'Description 10')",
+];
 
 /*
     DELIMITERS

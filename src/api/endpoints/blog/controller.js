@@ -89,9 +89,59 @@ async function deleteBlog(req, res, next) {
     }
 }
 
+async function getCategories(req, res, next) {
+    try {
+        const data = await service.getCategories();
+        return res.status(200).json({ data });
+    } catch (e) {
+        next(e);
+    }
+}
+
+async function createCategory(req, res, next) {
+    try {
+        tokenValidate(req);
+        const { name, description } = req.body;
+        if (name === undefined) throw errorResponder(errors.NO_ARGUMENT, "Name isn't supplied");
+        if (description === undefined) throw errorResponder(errors.NO_ARGUMENT, "Description isn't supplied");
+
+        const categoryId = await service.createCategory({ name, description });
+        return res.status(200).json({ message: "Successfully added!", categoryId });
+    } catch (e) {
+        next(e);
+    }
+}
+
+async function updateCategory(req, res, next) {
+    try {
+        tokenValidate(req);
+        const index = req.params.id || null;
+        if (index == null) throw errorResponder(errors.NO_ARGUMENT, "Index is somehow not supplied");
+        await service.updateCategory(index, req.body);
+        return res.status(200).json({ message: "Successfully changed!" });
+    } catch (e) {
+        next(e);
+    }
+}
+
+async function deleteCategory(req, res, next) {
+    try {
+        tokenValidate(req);
+        const index = req.params.id || null;
+
+        await service.deleteCategory(index);
+        return res.status(200).json({ message: "Successfully deleted!" });
+    } catch (e) {
+        next(e);
+    }
+}
 module.exports = {
     getBlogsList,
     createBlog,
     updateBlog,
     deleteBlog,
+    getCategories,
+    updateCategory,
+    deleteCategory,
+    createCategory,
 };

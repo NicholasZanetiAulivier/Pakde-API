@@ -47,9 +47,33 @@ async function deleteBlog(id) {
     await repository.deleteBlog(id);
 }
 
+async function getCategories() {
+    const res = await repository.getCategories();
+    return res.rows;
+}
+
+async function createCategory(data) {
+    const res = await repository.createCategory(data);
+    return res.rows[0].id;
+}
+
+async function updateCategory(id, data) {
+    await repository.updateCategory(id, data);
+    return;
+}
+
+async function deleteCategory(id) {
+    await repository.deleteCategory(id);
+    return;
+}
+
 module.exports = {
     getBlogsList,
     createBlog,
     updateBlog,
     deleteBlog,
+    getCategories,
+    updateCategory,
+    deleteCategory,
+    createCategory
 };
