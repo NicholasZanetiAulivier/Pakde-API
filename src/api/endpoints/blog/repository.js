@@ -90,9 +90,29 @@ async function updateBlog(id, data) {
     if (res.rows.length == 0) throw errorResponder(errors.DB, `There are no rows of ID ${id}`);
 }
 
+async function deleteBlog(id) {
+    let clientref, res;
+    await db.connect().then(async (client) => {
+        clientref = client;
+        await client.query(
+            `DELETE FROM blogs WHERE id = $1`,
+            [`${id}`]
+        ).then((result) => {
+            res = result;
+        }).catch((e) => {
+            console.log(e);
+            throw errorResponder(errors.DB, "Error deleting blog from database");
+        }).finally(() => {
+            clientref.release();
+        });
+    })
+    return res;
+}
+
 module.exports = {
     getBlogsList,
     getBlogsListByCategory,
     createBlog,
     updateBlog,
+    deleteBlog,
 };

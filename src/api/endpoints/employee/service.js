@@ -31,8 +31,15 @@ async function updateEmployee(id, data) {
     await repository.updateEmployee(id, data);
     return;
 }
+
+async function deleteEmployee(id) {
+    await repository.deleteEmployee(id);
+    return;
+}
+
 module.exports = {
     getEmployees,
     createEmployee,
     updateEmployee,
+    deleteEmployee,
 };

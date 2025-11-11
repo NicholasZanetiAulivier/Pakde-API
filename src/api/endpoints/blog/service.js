@@ -43,8 +43,13 @@ async function updateBlog(id, data) {
     return;
 }
 
+async function deleteBlog(id) {
+    await repository.deleteBlog(id);
+}
+
 module.exports = {
     getBlogsList,
     createBlog,
     updateBlog,
+    deleteBlog,
 };

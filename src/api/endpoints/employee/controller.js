@@ -44,8 +44,27 @@ async function updateEmployee(req, res, next) {
     }
 }
 
+async function deleteEmployee(req, res, next) {
+    try {
+        tokenValidate(req);
+        const index = req.params.id || null;
+        if (index == null) throw errorResponder(errors.NO_ARGUMENT, "Index is somehow not supplied");
+
+        const indexAsNumber = Number(index);
+        if (isNaN(indexAsNumber)) throw errorResponder(errors.INVALID_ARGUMENT, "Index should be a number");
+        if (!Number.isInteger(indexAsNumber)) throw errorResponder(errors.INVALID_ARGUMENT, "Index should be a positive integer");
+        if (indexAsNumber < 0) throw errorResponder(errors.INVALID_ARGUMENT, "Index must not be negative");
+
+        await service.deleteEmployee(indexAsNumber);
+        return res.status(200).json({ message: "Successfully deleted!" });
+    } catch (e) {
+        next(e);
+    }
+}
+
 module.exports = {
     getEmployees,
     createEmployee,
     updateEmployee,
+    deleteEmployee,
 };
