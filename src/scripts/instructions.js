@@ -120,8 +120,20 @@ instructions.seeders.misc = [
     "INSERT INTO misc(attribute , value) VALUES ('contacts_schedules','mon\\07:00-22:00&&tue\\07:00-22:00&&wed\\07:00-22:00&&thu\\07:00-22:00&&fri\\07:00-22:00&&sat\\CLOSED&&sun\\CLOSED');",
     "INSERT INTO misc(attribute , value) VALUES ('contacts_phone_numbers','08123456789');",
     "INSERT INTO misc(attribute , value) VALUES ('contacts_emails','pakdehar@gmail.com');",
-
 ];
+
+instructions.seeders.blogs = [
+    "INSERT INTO blogs (title , story) VALUES ('STORY 1' , 'Description 1')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 2' , 'Description 2')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 3' , 'Description 3')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 4' , 'Description 4')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 5' , 'Description 5')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 6' , 'Description 6')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 7' , 'Description 7')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 8' , 'Description 8')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 9' , 'Description 9')",
+    "INSERT INTO blogs (title , story) VALUES ('STORY 10' , 'Description 10')",
+]
 
 /*
     DELIMITERS

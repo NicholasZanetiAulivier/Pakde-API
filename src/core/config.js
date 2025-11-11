@@ -23,5 +23,6 @@ module.exports = {
         name: process.env.DATABASE,
         certificate: fs.readFileSync('./ca.pem').toString(),
         connectionString: process.env.CONNECTION_STRING,
+        ssl: process.env.SSL_REQUIRE == 1 ? true : false,
     },
 };

@@ -1,6 +1,6 @@
 const { errorResponder, errors } = require('../../../core/errors');
 const db = require('../../../database/db');
-const { swap } = require('../../utils/utils');
+const { swap } = require('../../../utils/utils');
 
 const pages = [
     'home',

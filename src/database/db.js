@@ -9,10 +9,10 @@ const CONNECTION_CONFIGURATION = {
     port: config.database.port,
     database: config.database.name,
     // connectionString: config.database.connectionString,
-    ssl: {
+    ssl: config.database.ssl ? {
         rejectUnauthorized: true,
         ca: config.database.certificate,
-    },
+    } : null,
 };
 
 db = new pg.Pool(CONNECTION_CONFIGURATION);
