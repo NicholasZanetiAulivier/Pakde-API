@@ -1,4 +1,4 @@
-const { errorResponder, errors } = require("../../core/errors");
+const { errorResponder, errors } = require("../core/errors");
 const jwt = require('jsonwebtoken');
 
 function swap(json) {

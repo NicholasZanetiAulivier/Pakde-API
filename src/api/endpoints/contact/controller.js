@@ -1,7 +1,6 @@
 const service = require('./service');
 const { errorResponder, errors } = require('../../../core/errors');
-const jwt = require('jsonwebtoken');
-const { tokenValidate } = require('../../utils/utils');
+const { tokenValidate } = require('../../../utils/utils');
 
 async function getContacts(req, res, next) {
     try {

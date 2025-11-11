@@ -8,7 +8,6 @@ const tables = [
     'employees',
     'blog_categories',
     'food_categories',
-    'images',
     'admins',
     'users',
     'misc',
