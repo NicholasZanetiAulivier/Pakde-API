@@ -15,18 +15,21 @@ async function getBlogsList(offset, limit, category) {
     for (const i of rows) {
         let obj = {};
         obj.id = i.id;
-        obj.metadata = {};
-        obj.metadata.uploaded = i.date_uploaded;
-        obj.metadata.updated = i.date_updated;
-        obj.blog = {};
-        obj.blog.title = i.title;
-        obj.blog.description = i.description;
-        obj.blog.story = i.story;
-        obj.blog.category = i.category;
-        obj.image = {};
-        obj.image.name = i.image_name;
-        obj.image.updated = i.image_date_updated;
-        obj.image.data = i.image_data;
+        obj.metadata = {
+            uploaded: i.date_uploaded,
+            updated: i.date_updated,
+        };
+        obj.blog = {
+            title: i.title,
+            description: i.description,
+            story: i.story,
+            category: i.category,
+        };
+        obj.image = {
+            name: i.image_name,
+            updated: i.image_date_updated,
+            data: i.image_data,
+        };
         data.push(obj);
     }
 

@@ -82,7 +82,7 @@ async function updateBlog(id, data) {
             res = result;
         }).catch((e) => {
             console.log(e);
-            throw errorResponder(errors.DB, "Error updating page attribute from database");
+            throw errorResponder(errors.DB, "Error updating blog from database");
         }).finally(() => {
             clientref.release();
         });
