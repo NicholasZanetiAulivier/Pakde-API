@@ -39,6 +39,21 @@ async function getBlogsList(req, res, next) {
     }
 }
 
+async function createBlog(req, res, next) {
+    try {
+        tokenValidate(req);
+        const { title, description, story, category } = req.body;
+        if (title === undefined) throw errorResponder(errors.NO_ARGUMENT, "Title isn't supplied");
+        if (story === undefined) throw errorResponder(errors.NO_ARGUMENT, "Content isn't supplied");
+
+        const blogId = await service.createBlog({ title, description, story, category });
+        return res.status(200).json({ message: "Successfully added!", blogId });
+    } catch (e) {
+        next(e);
+    }
+}
+
 module.exports = {
     getBlogsList,
+    createBlog,
 };

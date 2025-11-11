@@ -31,7 +31,26 @@ async function getBlogsList(offset, limit) {
             res = result;
         }).catch((e) => {
             console.log(e);
-            throw errorResponder(errors.DB, "Error getting blogs by from database");
+            throw errorResponder(errors.DB, "Error getting blogs from database");
+        }).finally(() => {
+            clientref.release();
+        });
+    })
+    return res;
+}
+
+async function createBlog(data) {
+    let clientref, res;
+    await db.connect().then(async (client) => {
+        clientref = client;
+        await client.query(
+            `INSERT INTO blogs(title, description,story,category) VALUES($1,$2,$3,$4) RETURNING id`,
+            [data.title, data.description ? data.description : null, data.story, data.category ? data.category : null]
+        ).then((result) => {
+            res = result;
+        }).catch((e) => {
+            console.log(`ERROR:`, e.code, e.detail);
+            throw errorResponder(errors.DB, "Error creating blog in database");
         }).finally(() => {
             clientref.release();
         });
@@ -42,4 +61,5 @@ async function getBlogsList(offset, limit) {
 module.exports = {
     getBlogsList,
     getBlogsListByCategory,
+    createBlog,
 };

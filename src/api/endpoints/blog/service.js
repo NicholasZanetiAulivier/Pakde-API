@@ -9,9 +9,14 @@ async function getBlogsList(offset, limit, category) {
         results = await repository.getBlogsList(offset, limit);
     }
     return results.rows;
+}
 
+async function createBlog(data) {
+    const res = await repository.createBlog(data);
+    return res.rows[0].id;
 }
 
 module.exports = {
     getBlogsList,
+    createBlog,
 };
