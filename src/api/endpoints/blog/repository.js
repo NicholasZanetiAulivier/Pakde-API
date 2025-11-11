@@ -58,8 +58,40 @@ async function createBlog(data) {
     return res;
 }
 
+async function updateBlog(id, data) {
+    let clientref, res
+    let tempKeys = [];
+    let tempVals = [];
+    for (const i of ['title', 'story', 'description', 'category']) {
+        if (data[i] === undefined) continue;
+        tempKeys.push(i);
+        tempVals.push(data[i]);
+    }
+    let tempQuery = [];
+    for (const i in tempKeys) {
+        let tempString = `${tempKeys[i]} = $${Number(i) + 2}`;
+        tempQuery.push(tempString);
+    }
+    let finalQuery = tempQuery.join(",");
+    await db.connect().then(async (client) => {
+        clientref = client;
+        await client.query(
+            `UPDATE blogs SET ${finalQuery} WHERE id = $1`,
+            [id].concat(tempVals)
+        ).then((result) => {
+            res = result;
+        }).catch((e) => {
+            console.log(e);
+            throw errorResponder(errors.DB, "Error updating page attribute from database");
+        }).finally(() => {
+            clientref.release();
+        });
+    })
+}
+
 module.exports = {
     getBlogsList,
     getBlogsListByCategory,
     createBlog,
+    updateBlog,
 };

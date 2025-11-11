@@ -16,7 +16,13 @@ async function createBlog(data) {
     return res.rows[0].id;
 }
 
+async function updateBlog(id, data) {
+    await repository.updateBlog(id, data);
+    return;
+}
+
 module.exports = {
     getBlogsList,
     createBlog,
+    updateBlog,
 };
