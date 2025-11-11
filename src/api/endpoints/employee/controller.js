@@ -11,6 +11,41 @@ async function getEmployees(req, res, next) {
     }
 }
 
+async function createEmployee(req, res, next) {
+    try {
+        tokenValidate(req);
+        const { name, role, description } = req.body;
+        if (name === undefined) throw errorResponder(errors.NO_ARGUMENT, "Name isn't supplied");
+        if (role === undefined) throw errorResponder(errors.NO_ARGUMENT, "Role isn't supplied");
+        if (description === undefined) throw errorResponder(errors.NO_ARGUMENT, "description isn't supplied");
+
+        const employeeId = await service.createEmployee({ name, role, description });
+        return res.status(200).json({ message: "Successfully added!", employeeId });
+    } catch (e) {
+        next(e);
+    }
+}
+
+async function updateEmployee(req, res, next) {
+    try {
+        tokenValidate(req);
+        const index = req.params.id || null;
+        if (index == null) throw errorResponder(errors.NO_ARGUMENT, "Index is somehow not supplied");
+
+        const indexAsNumber = Number(index);
+        if (isNaN(indexAsNumber)) throw errorResponder(errors.INVALID_ARGUMENT, "Index should be a number");
+        if (!Number.isInteger(indexAsNumber)) throw errorResponder(errors.INVALID_ARGUMENT, "Index should be a positive integer");
+        if (indexAsNumber < 0) throw errorResponder(errors.INVALID_ARGUMENT, "Index must not be negative");
+
+        await service.updateEmployee(indexAsNumber, req.body);
+        return res.status(200).json({ message: "Successfully changed!" });
+    } catch (e) {
+        next(e);
+    }
+}
+
 module.exports = {
     getEmployees,
+    createEmployee,
+    updateEmployee,
 };

@@ -21,6 +21,18 @@ async function getEmployees() {
 
     return data;
 }
+
+async function createEmployee(data) {
+    const results = await repository.createEmployee(data);
+    return results.rows[0].id;
+}
+
+async function updateEmployee(id, data) {
+    await repository.updateEmployee(id, data);
+    return;
+}
 module.exports = {
     getEmployees,
+    createEmployee,
+    updateEmployee,
 };
