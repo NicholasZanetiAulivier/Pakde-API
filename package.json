@@ -7,7 +7,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
+    "dev": "nodemon --trace-warnings src/index.js",
     "resetpopulate": "node src/scripts/migrations.js",
     "build": "node src/index.js"
   },

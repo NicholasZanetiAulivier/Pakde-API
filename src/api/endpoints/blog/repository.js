@@ -54,7 +54,7 @@ async function createBlog(data) {
         }).finally(() => {
             clientref.release();
         });
-    })
+    });
     return res;
 }
 
@@ -76,7 +76,7 @@ async function updateBlog(id, data) {
     await db.connect().then(async (client) => {
         clientref = client;
         await client.query(
-            `UPDATE blogs SET ${finalQuery} WHERE id = $1`,
+            `UPDATE blogs SET ${finalQuery} WHERE id = $1 RETURNING *`,
             [id].concat(tempVals)
         ).then((result) => {
             res = result;
@@ -86,7 +86,8 @@ async function updateBlog(id, data) {
         }).finally(() => {
             clientref.release();
         });
-    })
+    });
+    if (res.rows.length == 0) throw errorResponder(errors.DB, `There are no rows of ID ${id}`);
 }
 
 module.exports = {

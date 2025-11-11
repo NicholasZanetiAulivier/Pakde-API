@@ -1,6 +1,5 @@
 const { errorResponder, errors } = require('../../../core/errors');
 const db = require('../../../database/db');
-const { changeSchedule } = require('./controller');
 
 async function getContactsData() {
     let clientref, res;
@@ -172,7 +171,7 @@ module.exports = {
     updatePhoneNumber,
     getCurrentEmailString,
     updateEmail,
-    changeSchedule,
+    updateSchedule,
     getCurrentScheduleString,
     updateSchedule,
     getCurrentAddressString,

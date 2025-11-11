@@ -8,7 +8,29 @@ async function getBlogsList(offset, limit, category) {
     } else {
         results = await repository.getBlogsList(offset, limit);
     }
-    return results.rows;
+
+    const rows = results.rows;
+    const data = [];
+
+    for (const i of rows) {
+        let obj = {};
+        obj.id = i.id;
+        obj.metadata = {};
+        obj.metadata.uploaded = i.date_uploaded;
+        obj.metadata.updated = i.date_updated;
+        obj.blog = {};
+        obj.blog.title = i.title;
+        obj.blog.description = i.description;
+        obj.blog.story = i.story;
+        obj.blog.category = i.category;
+        obj.image = {};
+        obj.image.name = i.image_name;
+        obj.image.updated = i.image_date_updated;
+        obj.image.data = i.image_data;
+        data.push(obj);
+    }
+
+    return data;
 }
 
 async function createBlog(data) {
