@@ -15,21 +15,19 @@ async function getBlogsList(offset, limit, category) {
     for (const i of rows) {
         let obj = {};
         obj.id = i.id;
-        obj.metadata = {
+        obj.meta = {
             uploaded: i.date_uploaded,
             updated: i.date_updated,
         };
         obj.blog = {
             title: i.title,
             description: i.description,
-            story: i.story,
             category: i.category,
         };
         obj.image = {
             name: i.image_name,
-            updated: i.image_date_updated,
             data: i.image_data,
-        };
+        }
         data.push(obj);
     }
 
@@ -70,6 +68,31 @@ async function deleteCategory(id) {
     return;
 }
 
+async function getSpecificBlog(id) {
+    const res = await repository.getSpecificBlog(id);
+    const i = res.rows[0];
+    const obj = {};
+
+    obj.id = i.id;
+    obj.meta = {
+        uploaded: i.date_uploaded,
+        updated: i.date_updated,
+    };
+    obj.blog = {
+        title: i.title,
+        description: i.description,
+        category: i.category,
+        story: i.story,
+    };
+    obj.image = {
+        name: i.image_name,
+        updated: i.image_date_updated,
+        data: i.image_data,
+    }
+
+    return obj;
+}
+
 module.exports = {
     getBlogsList,
     createBlog,
@@ -78,5 +101,6 @@ module.exports = {
     getCategories,
     updateCategory,
     deleteCategory,
-    createCategory
+    createCategory,
+    getSpecificBlog,
 };

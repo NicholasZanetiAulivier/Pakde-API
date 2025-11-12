@@ -1,18 +1,21 @@
 const { errorResponder, errors } = require('../../../core/errors');
 const db = require('../../../database/db');
 
-async function getBlogsListByCategory(offset, limit, category) {
+async function getFoodsByCategory(offset, limit, highlighted, category) {
     let clientref, res;
     await db.connect().then(async (client) => {
         clientref = client;
         await client.query(
-            `SELECT * FROM blogs WHERE category = $1 ORDER BY date_uploaded LIMIT ${limit == 0 ? 'ALL' : '$3'} OFFSET $2`,
+            highlighted ?
+                `SELECT * FROM foods WHERE category = $1 AND highlighted = true ORDER BY id LIMIT ${limit == 0 ? 'ALL' : '$3'} OFFSET $2`
+                :
+                `SELECT * FROM foods WHERE category = $1 ORDER BY id LIMIT ${limit == 0 ? 'ALL' : '$3'} OFFSET $2`,
             limit == 0 ? [`${category}`, `${offset}`] : [`${category}`, `${offset}`, `${limit}`]
         ).then((result) => {
             res = result;
         }).catch((e) => {
             console.log(e);
-            throw errorResponder(errors.DB, "Error getting blogs by category from database");
+            throw errorResponder(errors.DB, "Error getting foods by category from database");
         }).finally(() => {
             clientref.release();
         });
@@ -20,93 +23,25 @@ async function getBlogsListByCategory(offset, limit, category) {
     return res;
 }
 
-async function getBlogsList(offset, limit) {
+async function getFoodsList(offset, limit, highlighted) {
     let clientref, res;
     await db.connect().then(async (client) => {
         clientref = client;
         await client.query(
-            `SELECT * FROM blogs ORDER BY date_uploaded LIMIT ${limit == 0 ? 'ALL' : '$2'} OFFSET $1`,
+            highlighted ?
+                `SELECT * FROM foods WHERE highlighted = true ORDER BY id LIMIT ${limit == 0 ? 'ALL' : '$2'} OFFSET $1`
+                :
+                `SELECT * FROM foods ORDER BY id LIMIT ${limit == 0 ? 'ALL' : '$2'} OFFSET $1`,
             limit == 0 ? [`${offset}`] : [`${offset}`, `${limit}`]
         ).then((result) => {
             res = result;
         }).catch((e) => {
             console.log(e);
-            throw errorResponder(errors.DB, "Error getting blogs from database");
+            throw errorResponder(errors.DB, "Error getting foods from database");
         }).finally(() => {
             clientref.release();
         });
     })
-    return res;
-}
-
-async function createBlog(data) {
-    let clientref, res;
-    await db.connect().then(async (client) => {
-        clientref = client;
-        await client.query(
-            `INSERT INTO blogs(title, description,story,category) VALUES($1,$2,$3,$4) RETURNING id`,
-            [data.title, data.description ? data.description : null, data.story, data.category ? data.category : null]
-        ).then((result) => {
-            res = result;
-        }).catch((e) => {
-            console.log(`ERROR:`, e.code, e.detail);
-            throw errorResponder(errors.DB, "Error creating blog in database");
-        }).finally(() => {
-            clientref.release();
-        });
-    });
-    return res;
-}
-
-async function updateBlog(id, data) {
-    let clientref, res
-    let tempKeys = ['date_updated'];
-    let tempVals = ['now()'];
-    for (const i of ['title', 'story', 'description', 'category']) {
-        if (data[i] === undefined) continue;
-        tempKeys.push(i);
-        tempVals.push(data[i]);
-    }
-    let tempQuery = [];
-    for (const i in tempKeys) {
-        let tempString = `${tempKeys[i]} = $${Number(i) + 2}`;
-        tempQuery.push(tempString);
-    }
-    let finalQuery = tempQuery.join(",");
-    await db.connect().then(async (client) => {
-        clientref = client;
-        await client.query(
-            `UPDATE blogs SET ${finalQuery} WHERE id = $1 RETURNING *`,
-            [id].concat(tempVals)
-        ).then((result) => {
-            res = result;
-        }).catch((e) => {
-            console.log(e);
-            throw errorResponder(errors.DB, "Error updating blog from database");
-        }).finally(() => {
-            clientref.release();
-        });
-    });
-    if (res.rows.length == 0) throw errorResponder(errors.DB, `There are no rows of ID ${id}`);
-}
-
-async function deleteBlog(id) {
-    let clientref, res;
-    await db.connect().then(async (client) => {
-        clientref = client;
-        await client.query(
-            `DELETE FROM blogs WHERE id = $1 RETURNING *`,
-            [`${id}`]
-        ).then((result) => {
-            res = result;
-        }).catch((e) => {
-            console.log(e);
-            throw errorResponder(errors.DB, "Error deleting blog from database");
-        }).finally(() => {
-            clientref.release();
-        });
-    })
-    if (res.rows.length == 0) throw errorResponder(errors.DB, `There are no rows of ID ${id}`);
     return res;
 }
 
@@ -115,12 +50,12 @@ async function getCategories() {
     await db.connect().then(async (client) => {
         clientref = client;
         await client.query(
-            `SELECT * FROM blog_categories`
+            `SELECT * FROM food_categories`
         ).then((result) => {
             res = result;
         }).catch((e) => {
             console.log(e);
-            throw errorResponder(errors.DB, "Error getting blog categories from database");
+            throw errorResponder(errors.DB, "Error getting food categories from database");
         }).finally(() => {
             clientref.release();
         });
@@ -133,13 +68,13 @@ async function createCategory(data) {
     await db.connect().then(async (client) => {
         clientref = client;
         await client.query(
-            `INSERT INTO blog_categories(name , description) VALUES($1,$2) RETURNING name`,
+            `INSERT INTO food_categories(name , description) VALUES($1,$2) RETURNING name`,
             [data.name, data.description]
         ).then((result) => {
             res = result;
         }).catch((e) => {
             console.log(`ERROR:`, e.code, e.detail);
-            throw errorResponder(errors.DB, "Error creating blog in database");
+            throw errorResponder(errors.DB, "Error creating category in database");
         }).finally(() => {
             clientref.release();
         });
@@ -165,7 +100,7 @@ async function updateCategory(id, data) {
     await db.connect().then(async (client) => {
         clientref = client;
         await client.query(
-            `UPDATE blog_categories SET ${finalQuery} WHERE name = $1 RETURNING *`,
+            `UPDATE food_categories SET ${finalQuery} WHERE name = $1 RETURNING *`,
             [id].concat(tempVals)
         ).then((result) => {
             res = result;
@@ -184,7 +119,7 @@ async function deleteCategory(id) {
     await db.connect().then(async (client) => {
         clientref = client;
         await client.query(
-            `DELETE FROM blog_categories WHERE name = $1 RETURNING *`,
+            `DELETE FROM food_categories WHERE name = $1 RETURNING *`,
             [`${id}`]
         ).then((result) => {
             res = result;
@@ -199,18 +134,50 @@ async function deleteCategory(id) {
     return res;
 }
 
-async function getSpecificBlog(id) {
+async function updateFood(id, data) {
+    let clientref, res
+    let tempKeys = ['date_updated'];
+    let tempVals = ['now()'];
+    for (const i of ['name', 'description', 'flavour', 'price', 'highlighted', 'category']) {
+        if (data[i] === undefined) continue;
+        tempKeys.push(i);
+        tempVals.push(data[i]);
+    }
+    let tempQuery = [];
+    for (const i in tempKeys) {
+        let tempString = `${tempKeys[i]} = $${Number(i) + 2}`;
+        tempQuery.push(tempString);
+    }
+    let finalQuery = tempQuery.join(",");
+    await db.connect().then(async (client) => {
+        clientref = client;
+        await client.query(
+            `UPDATE foods SET ${finalQuery} WHERE id = $1 RETURNING *`,
+            [id].concat(tempVals)
+        ).then((result) => {
+            res = result;
+        }).catch((e) => {
+            console.log(e);
+            throw errorResponder(errors.DB, "Error updating food from database");
+        }).finally(() => {
+            clientref.release();
+        });
+    });
+    if (res.rows.length == 0) throw errorResponder(errors.DB, `There are no rows of ID ${id}`);
+}
+
+async function deleteFood(id) {
     let clientref, res;
     await db.connect().then(async (client) => {
         clientref = client;
         await client.query(
-            `SELECT * FROM blogs WHERE id = $1`,
+            `DELETE FROM foods WHERE id = $1 RETURNING *`,
             [`${id}`]
         ).then((result) => {
             res = result;
         }).catch((e) => {
             console.log(e);
-            throw errorResponder(errors.DB, "Error getting blog from database");
+            throw errorResponder(errors.DB, "Error deleting food from database");
         }).finally(() => {
             clientref.release();
         });
@@ -219,15 +186,53 @@ async function getSpecificBlog(id) {
     return res;
 }
 
+async function createFood(data) {
+    let clientref, res;
+    await db.connect().then(async (client) => {
+        clientref = client;
+        await client.query(
+            `INSERT INTO foods(name, description, flavour, price, visitors, highlighted, category) VALUES($1 , $2 , $3 , $4 , $5 , $6 , $7 ) RETURNING id`,
+            [data.name, data.description ? data.description : null, data.flavour ? data.flavour : null, data.price ? data.price : null, data.visitors ? data.visitors : 0, data.highlighted ? true : false, data.category ? data.category : null]
+        ).then((result) => {
+            res = result;
+        }).catch((e) => {
+            console.log(`ERROR:`, e.code, e.detail);
+            throw errorResponder(errors.DB, "Error creating food in database");
+        }).finally(() => {
+            clientref.release();
+        });
+    });
+    return res;
+}
+
+async function getSpecificFood(id) {
+    let clientref, res;
+    await db.connect().then(async (client) => {
+        clientref = client;
+        await client.query(
+            `SELECT * FROM foods WHERE id = $1`,
+            [`${id}`]
+        ).then((result) => {
+            res = result;
+        }).catch((e) => {
+            console.log(e);
+            throw errorResponder(errors.DB, "Error getting food from database");
+        }).finally(() => {
+            clientref.release();
+        });
+    })
+    if (res.rows.length == 0) throw errorResponder(errors.DB, `There are no rows of ID ${id}`);
+    return res;
+}
 module.exports = {
-    getBlogsList,
-    getBlogsListByCategory,
-    createBlog,
-    updateBlog,
-    deleteBlog,
+    getFoodsByCategory,
+    getFoodsList,
     getCategories,
+    createCategory,
     updateCategory,
     deleteCategory,
-    createCategory,
-    getSpecificBlog,
+    updateFood,
+    deleteFood,
+    createFood,
+    getSpecificFood
 };

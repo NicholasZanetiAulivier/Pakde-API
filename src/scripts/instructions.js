@@ -61,7 +61,7 @@ instructions.tables.blogs =
         title VARCHAR UNIQUE NOT NULL,
         description VARCHAR,
         story text NOT NULL,
-        category VARCHAR REFERENCES blog_categories (name) ON DELETE RESTRICT,
+        category VARCHAR REFERENCES blog_categories (name) ON UPDATE CASCADE ON DELETE RESTRICT,
         image_name VARCHAR,
         image_date_updated TIMESTAMP,
         image_data BYTEA
@@ -76,9 +76,9 @@ instructions.tables.foods =
         description VARCHAR,
         flavour VARCHAR,
         price integer CHECK (price > 0),
-        visitors bigint CHECK ( visitors > 0 ),
-        recommended boolean NOT NULL,
-        category VARCHAR REFERENCES food_categories (name) ON DELETE RESTRICT,
+        visitors bigint CHECK ( visitors >= 0 ) DEFAULT  0,
+        highlighted boolean NOT NULL,
+        category VARCHAR REFERENCES food_categories (name) ON UPDATE CASCADE ON DELETE RESTRICT,
         image_name VARCHAR,
         image_date_updated TIMESTAMP,
         image_data BYTEA
