@@ -7,10 +7,12 @@ const config = require('./config');
 const logger = require('./logger');
 const router = require('../api/routes');
 const { errorResponder, errors } = require('./errors');
+const compression = require('compression');
 
 const app = express();
 
 app.enable('trust proxy');
+
 
 app.use(cors());
 
@@ -19,6 +21,8 @@ app.use(methodOverride('_method'));
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(compression());
 
 //Request info log
 app.use(function (req, res, next) {

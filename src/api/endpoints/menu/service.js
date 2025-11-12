@@ -101,6 +101,11 @@ async function getSpecificFood(id) {
     return obj;
 }
 
+async function changeImage(id, data) {
+    await repository.updateImage(id, data.buffer, data.originalname);
+    return;
+}
+
 module.exports = {
     getCategories,
     getFoods,
@@ -111,4 +116,5 @@ module.exports = {
     deleteFood,
     createFood,
     getSpecificFood,
+    changeImage,
 };

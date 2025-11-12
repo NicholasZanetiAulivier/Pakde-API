@@ -37,9 +37,15 @@ async function deleteEmployee(id) {
     return;
 }
 
+async function changeImage(id, data) {
+    await repository.updateImage(id, data.buffer, data.originalname);
+    return;
+}
+
 module.exports = {
     getEmployees,
     createEmployee,
     updateEmployee,
     deleteEmployee,
+    changeImage
 };

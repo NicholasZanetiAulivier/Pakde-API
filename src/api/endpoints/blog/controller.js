@@ -152,6 +152,26 @@ async function getSpecificBlog(req, res, next) {
         next(e);
     }
 }
+
+async function changeImage(req, res, next) {
+    try {
+        tokenValidate(req);
+        const index = req.params.id || null;
+        const f = req.file || null;
+        if (index == null) throw errorResponder(errors.NO_ARGUMENT, "Index is not supplied");
+        if (f == null) throw errorResponder(errors.NO_ARGUMENT, "Image file is not supplied");
+
+        const indexAsNumber = Number(index);
+        if (isNaN(indexAsNumber)) throw errorResponder(errors.INVALID_ARGUMENT, "Index should be a number");
+        if (!Number.isInteger(indexAsNumber)) throw errorResponder(errors.INVALID_ARGUMENT, "Index should be a positive integer");
+        if (indexAsNumber < 0) throw errorResponder(errors.INVALID_ARGUMENT, "Index must not be negative");
+
+        await service.changeImage(index, f);
+        return res.status(200).json({ message: "Image Changed" });
+    } catch (e) {
+        next(e);
+    }
+}
 module.exports = {
     getBlogsList,
     createBlog,
@@ -162,4 +182,5 @@ module.exports = {
     deleteCategory,
     createCategory,
     getSpecificBlog,
+    changeImage,
 };

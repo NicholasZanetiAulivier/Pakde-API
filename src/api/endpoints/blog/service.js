@@ -93,6 +93,11 @@ async function getSpecificBlog(id) {
     return obj;
 }
 
+async function changeImage(id, data) {
+    await repository.updateImage(id, data.buffer, data.originalname);
+    return;
+}
+
 module.exports = {
     getBlogsList,
     createBlog,
@@ -103,4 +108,5 @@ module.exports = {
     deleteCategory,
     createCategory,
     getSpecificBlog,
+    changeImage,
 };

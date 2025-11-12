@@ -224,6 +224,26 @@ async function getSpecificFood(id) {
     if (res.rows.length == 0) throw errorResponder(errors.DB, `There are no rows of ID ${id}`);
     return res;
 }
+
+async function updateImage(id, buf, name) {
+    let clientref, res;
+    await db.connect().then(async (client) => {
+        clientref = client;
+        await client.query(
+            `UPDATE foods SET image_data = $2 , image_date_updated = now() , image_name = $3 WHERE id = $1 RETURNING *`,
+            [id, buf, name]
+        ).then((result) => {
+            res = result;
+        }).catch((e) => {
+            console.log(e);
+            throw errorResponder(errors.DB, "Error updating image in database");
+        }).finally(() => {
+            clientref.release();
+        });
+    })
+    if (res.rows.length == 0) throw errorResponder(errors.DB, `There are no rows of ID ${id}`);
+    return res;
+}
 module.exports = {
     getFoodsByCategory,
     getFoodsList,
@@ -234,5 +254,6 @@ module.exports = {
     updateFood,
     deleteFood,
     createFood,
-    getSpecificFood
+    getSpecificFood,
+    updateImage,
 };

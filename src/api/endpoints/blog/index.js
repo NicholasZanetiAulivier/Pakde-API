@@ -1,5 +1,7 @@
 const express = require(`express`);
 const controller = require('./controller');
+const multer = require('multer');
+const multerDontSave = multer();
 
 const route = express.Router();
 
@@ -8,11 +10,11 @@ route.get('/list', controller.getBlogsList);
 route.get('/categories', controller.getCategories);
 route.get('/:id', controller.getSpecificBlog);
 
-// route.put('/:id/image' , controller.addImage) TODO: DO THIS
 route.post('/categories', controller.createCategory);
 route.post('/', controller.createBlog);
 
 route.put('/categories/:id', controller.updateCategory);
+route.put('/:id/image', multerDontSave.single('uploaded_img'), controller.changeImage);//NEEDS MULTIPART/FORM
 route.put('/:id', controller.updateBlog);
 
 route.delete('/categories/:id', controller.deleteCategory);
