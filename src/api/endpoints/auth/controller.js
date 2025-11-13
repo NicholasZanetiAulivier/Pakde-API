@@ -2,6 +2,7 @@ const { errorResponder, errors } = require('../../../core/errors');
 const service = require('./service');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const { tokenValidate } = require('../../../utils/utils');
 
 async function signInAdmin(req, res, next) {
     try {
@@ -39,6 +40,23 @@ async function signInAdmin(req, res, next) {
     }
 }
 
+async function verify(req, res, next) {
+    try {
+        const token = req.query.token;
+        if (token == null) throw errorResponder(errors.INVALID_TOKEN, "Token given is invalid or has expired!");
+        try {
+            jwt.verify(token, process.env.SECRET_KEY);
+        } catch (err) {
+            console.log(err);
+            throw errorResponder(errors.INVALID_TOKEN, "Token is invalid!");
+        }
+        return res.status(200).json({ message: "Verified!~" });
+    } catch (e) {
+        next(e);
+    }
+}
+
 module.exports = {
     signInAdmin,
+    verify,
 };
