@@ -5,7 +5,7 @@ const route = express.Router();
 
 //Paths
 route.get('/highlighted', controller.getHighlighted);
-route.get('/', controller.getReviews);
+route.get('/list', controller.getReviews);
 
 route.post('/', controller.createReview);
 

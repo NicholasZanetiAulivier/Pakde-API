@@ -70,7 +70,6 @@ async function getReviews(req, res, next) {
 }
 async function createReview(req, res, next) {
     try {
-        tokenValidate(req);
         const { name, email, phone_number, details, review_rating, review_description } = req.body;
         if (name === undefined) throw errorResponder(errors.NO_ARGUMENT, "Name isn't supplied");
         if (email === undefined) throw errorResponder(errors.NO_ARGUMENT, "Email isn't supplied");

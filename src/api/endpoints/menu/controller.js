@@ -38,7 +38,7 @@ async function getFoodList(req, res, next) {
 }
 async function getHighlighted(req, res, next) {
     try {
-        let { offset, limit } = req.query;
+        let { offset, limit, category } = req.query;
         for (const i of [offset, limit]) {
             if (i === undefined) continue;
             const num = Number(i);
@@ -63,7 +63,8 @@ async function getHighlighted(req, res, next) {
         }
         offset = Number(offset) || 0;
         limit = Number(limit) || 0;
-        const data = await service.getFoods(offset, limit, true);
+        category = category || null
+        const data = await service.getFoods(offset, limit, true, category);
         return res.status(200).json({ offset, limit, data });
     } catch (e) {
         next(e);
