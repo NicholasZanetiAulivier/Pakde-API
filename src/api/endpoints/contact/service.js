@@ -23,6 +23,7 @@ async function getContactsData() {
         let splitString = str.split("\\");
         return { name: splitString[0], address: splitString[1] };
     });
+    addressesArray = addressesArray.filter((e) => e !== '');
 
     //Process schedules
     processing = keyvals.schedules.split("&&");
@@ -34,9 +35,11 @@ async function getContactsData() {
 
     //Process phoneNumbers
     let phoneNumbersArray = keyvals.phoneNumbers.split("&&");
+    phoneNumbersArray = phoneNumbersArray.filter((e) => e !== '');
 
     //Process emails
     let emailsArray = keyvals.emails.split("&&");
+    emailsArray = emailsArray.filter((e) => e !== '');
 
     let data = {
         addresses: addressesArray,
