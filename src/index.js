@@ -2,18 +2,11 @@ const express = require('express');
 const { env, api } = require('./core/config');
 const server = require("./core/server");
 const logger = require("./core/logger");
+const port = api.port;
 
-
-// const app = server.listen(api.port, (err) => {
-//     if (err) {
-//         // logger.fatal(err, 'Failed to stat the server.');
-//         process.exit(1);
-//     } else {
-//         logger.info(`Server runs at port ${api.port} in ${env} environment`);
-//     }
-// });
-
-
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+});
 
 // process.on('uncaughtException', (err) => {
 //     // logger.fatal(err, 'Uncaught exception.');
@@ -24,5 +17,3 @@ const logger = require("./core/logger");
 //     setTimeout(() => process.abort(), 1000).unref();
 //     process.exit(1);
 // });
-
-module.exports = app;
