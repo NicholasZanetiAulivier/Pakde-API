@@ -15,12 +15,14 @@ const app = server.listen(api.port, (err) => {
 
 
 
-process.on('uncaughtException', (err) => {
-    // logger.fatal(err, 'Uncaught exception.');
+// process.on('uncaughtException', (err) => {
+//     // logger.fatal(err, 'Uncaught exception.');
 
-    // db.end();
-    app.close(() => process.exit(1));
+//     // db.end();
+//     app.close(() => process.exit(1));
 
-    setTimeout(() => process.abort(), 1000).unref();
-    process.exit(1);
-});
+//     setTimeout(() => process.abort(), 1000).unref();
+//     process.exit(1);
+// });
+
+export default app;
