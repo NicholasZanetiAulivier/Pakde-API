@@ -129,6 +129,10 @@ instructions.seeders.misc = [
     "INSERT INTO misc(attribute , value) VALUES ('contacts_emails','pakdehar@gmail.com');",
 ];
 
+instructions.seeders.visitors = [
+    'INSERT INTO visitors (day) VALUES (DATE(NOW()))',
+    'INSERT INTO visitors (day) VALUES (DATE(NOW())-1)',
+]
 
 // instructions.seeders.employees = [
 //     "INSERT INTO employees (name , role, details) VALUES ('Pakde Har' , 'Owner' , 'Some description')",

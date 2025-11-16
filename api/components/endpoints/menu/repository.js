@@ -294,7 +294,7 @@ async function getDashboard() {
     await db.connect().then(async (client) => {
         clientref = client;
         await client.query(
-            `SELECT * FROM visitors`
+            `SELECT * FROM visitors ORDER BY day DESC`
         ).then((result) => {
             res = result;
         }).catch((e) => {
