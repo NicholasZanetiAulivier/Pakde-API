@@ -197,6 +197,32 @@ async function changeImage(req, res, next) {
     }
 }
 
+async function viewFood(req, res, next) {
+    try {
+        const index = req.params.id || null;
+        if (index == null) throw errorResponder(errors.NO_ARGUMENT, "Index is not supplied");
+
+        const indexAsNumber = Number(index);
+        if (isNaN(indexAsNumber)) throw errorResponder(errors.INVALID_ARGUMENT, "Index should be a number");
+        if (!Number.isInteger(indexAsNumber)) throw errorResponder(errors.INVALID_ARGUMENT, "Index should be a positive integer");
+        if (indexAsNumber < 0) throw errorResponder(errors.INVALID_ARGUMENT, "Index must not be negative");
+
+        await service.viewFood(indexAsNumber);
+        return res.status(200).json({ message: 'Viewed' });
+    } catch (e) {
+        next(e);
+    }
+}
+
+async function getDashboard(req, res, next) {
+    try {
+        const data = await service.getDashboard();
+        return res.status(200).json({ data: data });
+    } catch (e) {
+        next(e);
+    }
+}
+
 module.exports = {
     getFoodList,
     getHighlighted,
@@ -209,4 +235,6 @@ module.exports = {
     createFood,
     getSpecificFood,
     changeImage,
+    viewFood,
+    getDashboard
 };

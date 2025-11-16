@@ -11,6 +11,7 @@ const tables = [
     'admins',
     'users',
     'misc',
+    'visitors'
 ];
 
 let clientref;

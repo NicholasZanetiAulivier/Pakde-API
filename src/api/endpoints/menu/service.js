@@ -106,6 +106,17 @@ async function changeImage(id, data) {
     return;
 }
 
+async function viewFood(id) {
+    await repository.viewFood(id);
+    await repository.view();
+    return;
+}
+
+async function getDashboard(id) {
+    const res = await repository.getDashboard(id);
+    return res.rows;
+}
+
 module.exports = {
     getCategories,
     getFoods,
@@ -117,4 +128,6 @@ module.exports = {
     createFood,
     getSpecificFood,
     changeImage,
+    viewFood,
+    getDashboard,
 };

@@ -244,6 +244,69 @@ async function updateImage(id, buf, name) {
     if (res.rows.length == 0) throw errorResponder(errors.DB, `There are no rows of ID ${id}`);
     return res;
 }
+
+async function viewFood(id) {
+    let clientref, res;
+    await db.connect().then(async (client) => {
+        clientref = client;
+        await client.query(
+            `UPDATE foods SET visitors=visitors+1 WHERE id= $1`,
+            [id]
+        ).then((result) => {
+            res = result;
+        }).catch((e) => {
+            console.log(e);
+            throw errorResponder(errors.DB, "Error looking food in database");
+        }).finally(() => {
+            clientref.release();
+        });
+    })
+    return res;
+}
+
+async function view() {
+    let clientref, res;
+    await db.connect().then(async (client) => {
+        clientref = client;
+        await client.query(
+            `do $$
+            BEGIN
+            IF EXISTS (SELECT * FROM visitors WHERE day=DATE(NOW())) THEN
+                UPDATE visitors SET visits = visits + 1 WHERE day=DATE(NOW());
+            ELSE
+                INSERT INTO visitors(day) VALUES(DATE(NOW()));
+            END IF;
+            end $$`
+        ).then((result) => {
+            res = result;
+        }).catch((e) => {
+            console.log(e);
+            throw errorResponder(errors.DB, "Error updating view in database");
+        }).finally(() => {
+            clientref.release();
+        });
+    })
+    return res;
+}
+
+async function getDashboard() {
+    let clientref, res;
+    await db.connect().then(async (client) => {
+        clientref = client;
+        await client.query(
+            `SELECT * FROM visitors`
+        ).then((result) => {
+            res = result;
+        }).catch((e) => {
+            console.log(e);
+            throw errorResponder(errors.DB, "Error getting dashboard in database");
+        }).finally(() => {
+            clientref.release();
+        });
+    })
+    return res;
+}
+
 module.exports = {
     getFoodsByCategory,
     getFoodsList,
@@ -256,4 +319,7 @@ module.exports = {
     createFood,
     getSpecificFood,
     updateImage,
+    viewFood,
+    view,
+    getDashboard,
 };
