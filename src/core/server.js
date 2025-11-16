@@ -5,7 +5,7 @@ const methodOverride = require('method-override');
 
 const config = require('./config');
 // const logger = require('./logger');
-const router = require('../api/routes');
+const router = require('../components/routes');
 const { errorResponder, errors } = require('./errors');
 const compression = require('compression');
 
