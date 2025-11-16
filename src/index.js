@@ -1,8 +1,8 @@
+const express = require('express');
 const { env, api } = require('./core/config');
 const server = require("./core/server");
 const logger = require("./core/logger");
 
-const express = require('express'); //for vercel
 
 // const app = server.listen(api.port, (err) => {
 //     if (err) {
