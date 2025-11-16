@@ -4,14 +4,14 @@ const logger = require("./core/logger");
 
 const express = require('express'); //for vercel
 
-const app = server.listen(api.port, (err) => {
-    if (err) {
-        // logger.fatal(err, 'Failed to stat the server.');
-        process.exit(1);
-    } else {
-        logger.info(`Server runs at port ${api.port} in ${env} environment`);
-    }
-});
+// const app = server.listen(api.port, (err) => {
+//     if (err) {
+//         // logger.fatal(err, 'Failed to stat the server.');
+//         process.exit(1);
+//     } else {
+//         logger.info(`Server runs at port ${api.port} in ${env} environment`);
+//     }
+// });
 
 
 
