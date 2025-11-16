@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
 const config = require('./config');
-const logger = require('./logger');
+// const logger = require('./logger');
 const router = require('../api/routes');
 const { errorResponder, errors } = require('./errors');
 const compression = require('compression');
@@ -34,7 +34,7 @@ module.exports = (app) => {
         // const json = req.body;
 
         const log = `${method} ${url} ${ip}`;
-        logger.info(log);
+        // logger.info(log);
 
         // logger.debug(`Params: ${params ? JSON.stringify(params) : "None"}`);
         // logger.debug(`Query: ${query ? JSON.stringify(query) : "None"}`);
@@ -54,8 +54,8 @@ module.exports = (app) => {
     app.use((err, req, res, next) => {
         const error = `${err.code} ${err.status} ${err.description}`;
         const stack = err.stack || "No stack";
-        logger.error(error);
-        logger.error(stack);
+        // logger.error(error);
+        // logger.error(stack);
         return next(err);
     });
 
