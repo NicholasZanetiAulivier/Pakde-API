@@ -8,8 +8,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --trace-warnings src/index.js",
-    "resetpopulate": "node src/scripts/migrations.js",
-    "build": "node src/index.js"
+    "resetpopulate": "node src/scripts/migrations.js"
   },
   "devDependencies": {
     "dotenv": "^17.2.3",
