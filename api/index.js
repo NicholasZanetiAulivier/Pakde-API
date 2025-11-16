@@ -4,6 +4,8 @@ const server = require("./core/server");
 const app = express();
 server(app);
 
+app.listen(process.env.APP_PORT || 1982);
+
 // process.on('uncaughtException', (err) => {
 //     // logger.fatal(err, 'Uncaught exception.');
 
