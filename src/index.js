@@ -25,4 +25,4 @@ const app = server.listen(api.port, (err) => {
 //     process.exit(1);
 // });
 
-export default app;
+module.exports = app;
