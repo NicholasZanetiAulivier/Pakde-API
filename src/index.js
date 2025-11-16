@@ -17,3 +17,5 @@ app.listen(port, () => {
 //     setTimeout(() => process.abort(), 1000).unref();
 //     process.exit(1);
 // });
+
+module.exports = app;
