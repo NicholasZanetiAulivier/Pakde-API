@@ -1,6 +1,6 @@
 const { env, api } = require('./core/config');
 const server = require("./core/server");
-const logger = require("./core/logger");
+// const logger = require("./core/logger");
 const db = require("./database/db")
 const port = api.port;
 const express = require('express');
@@ -18,5 +18,5 @@ server(app);
 //     setTimeout(() => process.abort(), 1000).unref();
 //     process.exit(1);
 // });
-
+console.log('HERE')
 module.exports = app;
