@@ -3,11 +3,6 @@ const fs = require('fs');
 
 process.env.NODE_ENV = (process.env.NODE_ENV || 'development').toLowerCase();
 
-const envFound = dotenv.config({ path: '.env' });
-if (envFound.error) {
-    throw new Error("⚠️ Couldn't find .env file ⚠️");
-}
-
 module.exports = {
     env: process.env.NODE_ENV,
     api: {
