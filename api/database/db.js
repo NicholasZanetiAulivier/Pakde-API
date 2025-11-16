@@ -1,6 +1,6 @@
 const pg = require('pg');
 const config = require('../core/config');
-const logger = require('../core/logger');
+// const logger = require('../core/logger');
 const verc = require('@vercel/functions');
 
 const CONNECTION_CONFIGURATION = {
@@ -27,7 +27,7 @@ db.connect(function (err) {
         if (err) {
             throw err;
         }
-        logger.info("Database is connected");
+        // logger.info("Database is connected");
         console.log(result.rows[0]);
         // db.end(function (err) {
         //     if (err) throw err;
