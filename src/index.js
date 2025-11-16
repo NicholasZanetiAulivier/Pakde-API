@@ -1,12 +1,13 @@
 const { env, api } = require('./core/config');
-const app = require("./core/server");
+const server = require("./core/server");
 const logger = require("./core/logger");
+const db = require("./database/db")
 const port = api.port;
 const express = require('express');
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-});
+const app = express();
+
+server(app);
 
 // process.on('uncaughtException', (err) => {
 //     // logger.fatal(err, 'Uncaught exception.');
