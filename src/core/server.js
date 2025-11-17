@@ -10,11 +10,17 @@ const { errorResponder, errors } = require('./errors');
 const compression = require('compression');
 
 module.exports = (app) => {
+    const corsOptions = {
+        origin: '*', // Or an array of allowed origins
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        credentials: true, // Allow cookies to be sent with cross-origin requests
+        allowedHeaders: ['Content-Type', 'Authorization'] // Specify allowed headers
+    };
 
     app.enable('trust proxy');
 
 
-    app.use(cors());
+    app.use(cors(corsOptions));
 
     app.use(methodOverride('_method'));
 
