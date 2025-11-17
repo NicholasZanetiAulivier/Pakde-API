@@ -1,5 +1,5 @@
 const express = require('express');
-const server = require("./core/server");
+const server = require("../src/core/server");
 
 const app = express();
 server(app);

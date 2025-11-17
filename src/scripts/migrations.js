@@ -13,6 +13,8 @@ const tables = [
     'misc',
     'visitors'
 ];
+const dotenv = require('dotenv');
+
 
 let clientref;
 //This is the migration part (uses then because async)

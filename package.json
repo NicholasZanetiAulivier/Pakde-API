@@ -10,6 +10,9 @@
     "dotenv": "^17.2.3",
     "nodemon": "^3.1.10"
   },
+  "scripts": {
+    "resetpopulate": "node api/scripts/migrations.js --env-file=.env"
+  },
   "dependencies": {
     "@vercel/functions": "^3.3.2",
     "bcrypt": "^6.0.0",
