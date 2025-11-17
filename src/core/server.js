@@ -40,7 +40,7 @@ module.exports = (app) => {
         // const json = req.body;
 
         const log = `${method} ${url} ${ip}`;
-        // logger.info(log);
+        console.log(log);
 
         // logger.debug(`Params: ${params ? JSON.stringify(params) : "None"}`);
         // logger.debug(`Query: ${query ? JSON.stringify(query) : "None"}`);
@@ -60,6 +60,8 @@ module.exports = (app) => {
     app.use((err, req, res, next) => {
         const error = `${err.code} ${err.status} ${err.description}`;
         const stack = err.stack || "No stack";
+        console.error(error);
+        console.error(stack);
         // logger.error(error);
         // logger.error(stack);
         return next(err);
