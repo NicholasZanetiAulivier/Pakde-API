@@ -60,7 +60,9 @@ module.exports = (app) => {
     app.use((err, req, res, next) => {
         const error = `${err.code} ${err.status} ${err.description}`;
         const stack = err.stack || "No stack";
+        const cause = err.cause;
         console.error(error);
+        console.error(cause);
         console.error(stack);
         // logger.error(error);
         // logger.error(stack);
