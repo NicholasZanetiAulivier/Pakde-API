@@ -1,4 +1,3 @@
-const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
@@ -10,17 +9,10 @@ const { errorResponder, errors } = require('./errors');
 const compression = require('compression');
 
 module.exports = (app) => {
-    const corsOptions = {
-        origin: true, // Or an array of allowed origins
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        credentials: true, // Allow cookies to be sent with cross-origin requests
-        allowedHeaders: ['Content-Type', 'Authorization'] // Specify allowed headers
-    };
 
     app.enable('trust proxy');
 
-
-    app.use(cors(corsOptions));
+    app.use(cors());
 
     app.use(methodOverride('_method'));
 

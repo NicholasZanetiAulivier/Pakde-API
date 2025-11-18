@@ -1,7 +1,7 @@
 const express = require(`express`);
 const controller = require('./controller');
 const multer = require('multer');
-const multerDontSave = multer();
+const multerDontSave = multer({ limits: 5 * 1024 * 1024 });
 
 const route = express.Router();
 
