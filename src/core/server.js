@@ -35,20 +35,13 @@ module.exports = (app) => {
         const ip = req.ip;
         const method = req.method;
         const url = req.originalUrl;
-        // const params = req.params;
-        // const query = req.query;
-        // const json = req.body;
 
         const log = `${method} ${url} ${ip}`;
         console.log(log);
 
-        // logger.debug(`Params: ${params ? JSON.stringify(params) : "None"}`);
-        // logger.debug(`Query: ${query ? JSON.stringify(query) : "None"}`);
-        // logger.debug(`Body: ${json ? JSON.stringify(json) : "None"}`);
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT , PATCH , DELETE, OPTIONS');
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-        res.setHeader('Access-Control-Allow-Credentials', 'false');
+        console.log(req.body);
+
+
         return next();
     });
 
