@@ -1,3 +1,4 @@
+const formidable = require("formidable");
 const { errorResponder, errors } = require("../core/errors");
 const jwt = require('jsonwebtoken');
 
@@ -21,7 +22,20 @@ function tokenValidate(req) {
     return;
 }
 
+const useFormidable = (req, res, next) => {
+    const form = formidable({});
+
+    form.parse(req, (err, fields, files) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.json({ fields, files });
+    });
+};
+
 module.exports = {
     swap,
     tokenValidate,
+    useFormidable,
 };

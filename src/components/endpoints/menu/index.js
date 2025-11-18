@@ -1,6 +1,7 @@
 const express = require(`express`);
 const controller = require('./controller');
 const multer = require('multer');
+const { useFormidable } = require('../../../utils/utils');
 const multerDontSave = multer({ limits: 5 * 1024 * 1024 });
 
 const route = express.Router();
@@ -23,5 +24,7 @@ route.patch('/view/:id', controller.viewFood);
 
 route.delete('/categories/:id', controller.deleteCategory);
 route.delete('/:id', controller.deleteFood);
+
+route.post('/test', useFormidable);
 
 module.exports = route;
