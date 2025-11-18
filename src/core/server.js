@@ -31,9 +31,6 @@ module.exports = (app) => {
         const log = `${method} ${url} ${ip}`;
         console.log(log);
 
-        console.log(req.body);
-
-
         return next();
     });
 

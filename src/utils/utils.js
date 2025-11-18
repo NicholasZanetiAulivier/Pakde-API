@@ -22,20 +22,7 @@ function tokenValidate(req) {
     return;
 }
 
-const useFormidable = (req, res, next) => {
-    const form = formidable({});
-
-    form.parse(req, (err, fields, files) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.json({ fields, files });
-    });
-};
-
 module.exports = {
     swap,
     tokenValidate,
-    useFormidable,
 };
