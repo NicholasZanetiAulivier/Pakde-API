@@ -45,6 +45,10 @@ module.exports = (app) => {
         // logger.debug(`Params: ${params ? JSON.stringify(params) : "None"}`);
         // logger.debug(`Query: ${query ? JSON.stringify(query) : "None"}`);
         // logger.debug(`Body: ${json ? JSON.stringify(json) : "None"}`);
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT , PATCH , DELETE, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        res.setHeader('Access-Control-Allow-Credentials', 'false');
         return next();
     });
 
