@@ -48,9 +48,8 @@ instructions.tables.employees =
         name VARCHAR UNIQUE NOT NULL,
         role VARCHAR NOT NULL,
         details VARCHAR NOT NULL,
-        image_name VARCHAR,
         image_date_updated TIMESTAMP,
-        image_data BYTEA
+        image_data TEXT
     );`;
 
 instructions.tables.blogs =
@@ -62,9 +61,8 @@ instructions.tables.blogs =
         description VARCHAR,
         story text NOT NULL,
         category VARCHAR REFERENCES blog_categories (name) ON UPDATE CASCADE ON DELETE RESTRICT,
-        image_name VARCHAR,
         image_date_updated TIMESTAMP,
-        image_data BYTEA
+        image_data TEXT
         );`;
 
 instructions.tables.foods =
@@ -79,9 +77,8 @@ instructions.tables.foods =
         visitors bigint CHECK ( visitors >= 0 ) DEFAULT  0,
         highlighted boolean NOT NULL,
         category VARCHAR REFERENCES food_categories (name) ON UPDATE CASCADE ON DELETE RESTRICT,
-        image_name VARCHAR,
         image_date_updated TIMESTAMP,
-        image_data BYTEA
+        image_data TEXT
     );`;
 
 instructions.tables.visitors =

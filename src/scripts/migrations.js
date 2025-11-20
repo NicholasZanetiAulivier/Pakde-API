@@ -13,7 +13,6 @@ const tables = [
     'misc',
     'visitors'
 ];
-const dotenv = require('dotenv');
 
 
 let clientref;

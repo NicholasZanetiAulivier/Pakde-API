@@ -28,17 +28,19 @@ async function createEmployee(req, res, next) {
 
 async function updateEmployee(req, res, next) {
     try {
-        tokenValidate(req);
+        ttokenValidate(req);
         const index = req.params.id || null;
-        if (index == null) throw errorResponder(errors.NO_ARGUMENT, "Index is somehow not supplied");
+        const { data } = req.body || null;
+        if (index == null) throw errorResponder(errors.NO_ARGUMENT, "Index is not supplied");
+        if (data == null) throw errorResponder(errors.NO_ARGUMENT, "Image file data is not supplied");
 
         const indexAsNumber = Number(index);
         if (isNaN(indexAsNumber)) throw errorResponder(errors.INVALID_ARGUMENT, "Index should be a number");
         if (!Number.isInteger(indexAsNumber)) throw errorResponder(errors.INVALID_ARGUMENT, "Index should be a positive integer");
         if (indexAsNumber < 0) throw errorResponder(errors.INVALID_ARGUMENT, "Index must not be negative");
 
-        await service.updateEmployee(indexAsNumber, req.body);
-        return res.status(200).json({ message: "Successfully changed!" });
+        await service.changeImage(index, data);
+        return res.status(200).json({ message: "Image Changed" });
     } catch (e) {
         next(e);
     }

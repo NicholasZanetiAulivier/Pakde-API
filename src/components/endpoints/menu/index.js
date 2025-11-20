@@ -1,8 +1,5 @@
 const express = require(`express`);
 const controller = require('./controller');
-const multer = require('multer');
-const multerDontSave = multer(multer.memoryStorage());
-
 const route = express.Router();
 
 //Paths
@@ -15,7 +12,7 @@ route.get('/:id', controller.getSpecificFood);
 route.post('/categories', controller.createCategory);
 route.post('/', controller.createFood);
 
-route.put('/:id/image', multerDontSave.single('uploaded_img'), controller.changeImage);
+route.put('/:id/image', controller.changeImage);
 route.put('/categories/:id', controller.updateCategory);
 route.put('/:id', controller.updateFood);
 

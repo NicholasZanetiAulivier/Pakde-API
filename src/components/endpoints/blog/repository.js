@@ -219,13 +219,13 @@ async function getSpecificBlog(id) {
     return res;
 }
 
-async function updateImage(id, buf, name) {
+async function updateImage(id, data) {
     let clientref, res;
     await db.connect().then(async (client) => {
         clientref = client;
         await client.query(
-            `UPDATE blogs SET image_data = $2 , image_date_updated = now() , image_name = $3 WHERE id = $1 RETURNING *`,
-            [id, buf, name]
+            `UPDATE blogs SET image_data = $2 , image_date_updated = now() WHERE id = $1 RETURNING *`,
+            [id, data]
         ).then((result) => {
             res = result;
         }).catch((e) => {

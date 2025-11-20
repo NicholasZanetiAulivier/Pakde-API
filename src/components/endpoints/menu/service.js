@@ -102,7 +102,7 @@ async function getSpecificFood(id) {
 }
 
 async function changeImage(id, data) {
-    await repository.updateImage(id, data.buffer, data.originalname);
+    await repository.updateImage(id, data);
     return;
 }
 

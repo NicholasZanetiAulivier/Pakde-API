@@ -225,13 +225,13 @@ async function getSpecificFood(id) {
     return res;
 }
 
-async function updateImage(id, buf, name) {
+async function updateImage(id, data) {
     let clientref, res;
     await db.connect().then(async (client) => {
         clientref = client;
         await client.query(
-            `UPDATE foods SET image_data = $2 , image_date_updated = now() , image_name = $3 WHERE id = $1 RETURNING *`,
-            [id, buf, name]
+            `UPDATE foods SET image_data = $2 , image_date_updated = now() WHERE id = $1 RETURNING *`,
+            [id, data]
         ).then((result) => {
             res = result;
         }).catch((e) => {
