@@ -32,7 +32,7 @@ async function updateEmployee(req, res, next) {
         const index = req.params.id || null;
         const { data } = req.body || null;
         if (index == null) throw errorResponder(errors.NO_ARGUMENT, "Index is not supplied");
-        if (data == null) throw errorResponder(errors.NO_ARGUMENT, "Image file data is not supplied");
+        if (data == null) throw errorResponder(errors.NO_ARGUMENT, "Employee Data is not supplied");
 
         const indexAsNumber = Number(index);
         if (isNaN(indexAsNumber)) throw errorResponder(errors.INVALID_ARGUMENT, "Index should be a number");
