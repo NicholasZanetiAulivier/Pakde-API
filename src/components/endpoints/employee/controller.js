@@ -39,8 +39,8 @@ async function updateEmployee(req, res, next) {
         if (!Number.isInteger(indexAsNumber)) throw errorResponder(errors.INVALID_ARGUMENT, "Index should be a positive integer");
         if (indexAsNumber < 0) throw errorResponder(errors.INVALID_ARGUMENT, "Index must not be negative");
 
-        await service.changeImage(index, data);
-        return res.status(200).json({ message: "Image Changed" });
+        await service.updateEmployee(index, data);
+        return res.status(200).json({ message: "Employee Changed" });
     } catch (e) {
         next(e);
     }
