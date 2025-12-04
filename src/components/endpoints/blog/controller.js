@@ -160,6 +160,8 @@ async function changeImage(req, res, next) {
         const { data } = req.body || null;
         if (index == null) throw errorResponder(errors.NO_ARGUMENT, "Index is not supplied");
         if (data == null) throw errorResponder(errors.NO_ARGUMENT, "Image file data is not supplied");
+        if (typeof data !== 'string' || !data.startsWith('data:')) throw errorResponder(errors.INVALID_ARGUMENT, "Data is not an image datastring");
+        if (!/^(data:image\/(jpeg|png|gif|webp|svg\+xml|bmp|tiff);base64,)/.test(data)) throw errorResponder(errors.INVALID_ARGUMENT, "data is not an image datastring!");
 
         const indexAsNumber = Number(index);
         if (isNaN(indexAsNumber)) throw errorResponder(errors.INVALID_ARGUMENT, "Index should be a number");
