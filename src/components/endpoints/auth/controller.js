@@ -2,7 +2,6 @@ const { errorResponder, errors } = require('../../../core/errors');
 const service = require('./service');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { tokenValidate } = require('../../../utils/utils');
 
 async function signInAdmin(req, res, next) {
     try {

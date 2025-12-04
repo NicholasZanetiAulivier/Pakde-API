@@ -28,7 +28,7 @@ async function createEmployee(req, res, next) {
 
 async function updateEmployee(req, res, next) {
     try {
-        ttokenValidate(req);
+        tokenValidate(req);
         const index = req.params.id || null;
         const { data } = req.body || null;
         if (index == null) throw errorResponder(errors.NO_ARGUMENT, "Index is not supplied");

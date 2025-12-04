@@ -1,4 +1,3 @@
-const { errorResponder, errors } = require('../../../core/errors');
 const repository = require('./repository');
 
 async function getEmployees() {

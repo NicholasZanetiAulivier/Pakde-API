@@ -1,4 +1,3 @@
-const formidable = require("formidable");
 const { errorResponder, errors } = require("../core/errors");
 const jwt = require('jsonwebtoken');
 
