@@ -30,7 +30,7 @@ async function updateEmployee(req, res, next) {
     try {
         tokenValidate(req);
         const index = req.params.id || null;
-        const { data } = req.body || null;
+        const data = req.body || null;
         if (index == null) throw errorResponder(errors.NO_ARGUMENT, "Index is not supplied");
         if (data == null) throw errorResponder(errors.NO_ARGUMENT, "Employee Data is not supplied");
 
